@@ -1,8 +1,8 @@
-import Firstpage from "../components/Firstpage/firstpage";
+import MyJobsPage from "../../../components/UserJobs/myjobs";
 export default function Home() {
   return (
     <main className="">
-      <Firstpage />
+      <MyJobsPage />
     </main>
   );
 }

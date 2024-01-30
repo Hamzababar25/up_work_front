@@ -1,8 +1,8 @@
-import Firstpage from "../components/Firstpage/firstpage";
+import Dashboard from "../../components/Dashboard/dashboard";
 export default function Home() {
   return (
     <main className="">
-      <Firstpage />
+      <Dashboard />
     </main>
   );
 }
