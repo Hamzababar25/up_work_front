@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
-import React, { useState, Fragment, useRef } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import Link from "next/link";
 import {
   Select,
@@ -32,6 +32,8 @@ function MyProfilePage() {
   const [open, setOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
+  const [userDetails, setUserDetails] = useState(null);
+  console.log("data", userDetails);
 
   const handleEditClickFalse = () => {
     // Update the isHidden state to false when the "Edit" link is clicked
@@ -44,6 +46,24 @@ function MyProfilePage() {
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
+  const userId = sessionStorage.getItem("user");
+
+  useEffect(() => {
+    // Fetch user details after successful sign-in
+    const userId = sessionStorage.getItem("user");
+    console.log("janjn", userId); // assuming you store the user ID in sessionStorage
+
+    // Make an API request to fetch user details based on userId
+    // Use your backend API URL
+    fetch(`http://localhost:3001/User/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUserDetails(data.result);
+      })
+      .catch((error) => {
+        console.error("Error fetching user details:", error);
+      });
+  }, []); // Run
 
   const handleImage = (e) => {
     let file = null;
@@ -97,7 +117,7 @@ function MyProfilePage() {
             <div className=" h-2/3 w-28 rounded-full  ">
               {" "}
               <img
-                src={selectedFile}
+                src={userDetails?.image}
                 className=" rounded-full  object-scale-down h-28 w-96 border border-blue-100 ..."
               />
             </div>
@@ -111,6 +131,14 @@ function MyProfilePage() {
               </div>
               <div className="h-1/4 w-1/2 text-opacity-75 text-gray-600 text-base">
                 {CompanyName}
+              </div>
+              <div className=" h-2/3 w-28 rounded-full  ">
+                {" "}
+                <video
+                  src={userDetails?.video}
+                  className="rounded-full object-scale-down h-28 w-96 border border-blue-100"
+                  controls
+                />
               </div>
             </div>
 
@@ -133,17 +161,19 @@ function MyProfilePage() {
             </div>
             <div className=" flex gap-24 h-1/6 w-1/4   ">
               <p className="text-opacity-80 text-gray-600 text-base">Email:</p>{" "}
-              <p className="text-black font-normal">{Email}</p>{" "}
+              <p className="text-black font-normal">{userDetails?.mail}</p>{" "}
             </div>
             <div className=" flex gap-24 h-1/6 w-1/4   ">
               <p className="text-opacity-80 text-gray-600 text-base">Phone:</p>{" "}
-              <p className="text-black font-normal">{PhoneNumber}</p>{" "}
+              <p className="text-black font-normal">
+                {userDetails?.phoneNumber}
+              </p>{" "}
             </div>
             <div className=" flex gap-20 h-1/6 w-1/4   ">
               <p className="text-opacity-80 text-gray-600 text-base">
-                Company:
+                FullName:
               </p>{" "}
-              <p className="text-black font-normal">{CompanyName}</p>{" "}
+              <p className="text-black font-normal">{userDetails?.fullname}</p>{" "}
             </div>
             <div>
               {/* Display the uploaded video
@@ -336,27 +366,6 @@ function MyProfilePage() {
             <div className="flex flex-col gap-2 h-20 w-1/3 ">
               {" "}
               {/* <p className="text-opacity-75 text-gray-600 text-sm">
-                First Name
-              </p>{" "} */}
-              {/* <input className="h-9  rounded-md borde bg-[#F7F8F9]"></input>{" "} */}
-              <TextField
-                id="standard-basic"
-                type="email"
-                label="Enter Email"
-                placeholder="Email"
-                required
-                value={Email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                size="small"
-                className="w-full  rounded-md border  bg-[#F7F8F9]"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2 h-20 w-1/3 ">
-              {" "}
-              {/* <p className="text-opacity-75 text-gray-600 text-sm">
                 Email
               </p>{" "} */}
               <TextField
@@ -429,47 +438,9 @@ function MyProfilePage() {
                 className="w-full  rounded-md border  bg-[#F7F8F9]"
               />{" "}
             </div>
-            <div className="flex flex-col gap-2 h-20 w-1/3 ">
-              {" "}
-              {/* <p className="text-opacity-75 text-gray-600 text-sm">
-                Gender
-              </p>{" "} */}
-              <Select
-                label=" Gender"
-                placeholder="Gender"
-                value={Gender}
-                onChange={(e) => {
-                  setGender(e.target.value);
-                }}
-                size="small"
-                className="w-full  rounded-md border  bg-[#F7F8F9]"
-              >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="nonbinary">Non-binary</MenuItem>
-                {/* Add more MenuItem components for additional gender options */}
-              </Select>
-            </div>
-            <div className="flex flex-col gap-2 h-20 w-1/3 ">
-              {" "}
-              {/* <p className="text-opacity-75 text-gray-600 text-sm">
-                Company Name
-              </p>{" "} */}
-              <TextField
-                id="standard-basic"
-                label=" Enter Company Name"
-                placeholder=" Company Name"
-                required
-                value={CompanyName}
-                onChange={(e) => {
-                  setCompanyName(e.target.value);
-                }}
-                size="small"
-                className="w-full  rounded-md border  bg-[#F7F8F9]"
-              />{" "}
-            </div>
+
             <div className="flex flex-col gap-2 h-20 w-1/3">
-              <label htmlFor="video">Upload Video</label>
+              <label htmlFor="video">Upload Resume Video</label>
               <input
                 id="video"
                 type="file"

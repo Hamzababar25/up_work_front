@@ -131,7 +131,7 @@ const SignupPage = ({ apisignup }) => {
 
         <p className="text-center text-gray-600">
           Already signed up?{" "}
-          <a href="/login" className="text-blue-500">
+          <a href="/auth/FreelancerSignin" className="text-blue-500">
             Click here to log in
           </a>
         </p>

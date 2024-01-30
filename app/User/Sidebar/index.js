@@ -128,14 +128,14 @@ const Sidebar = ({
           </svg>
         </button>
       </div>
-      <div className="w-10/12 mx-auto flex rounded-xl bg-white shadow-md">
+      {/* <div className="w-10/12 mx-auto flex rounded-xl bg-white shadow-md">
         <div className="w-1/2 flex font-semibold justify-center p-2 rounded-l-xl text-xs items-center bg-white">
           Company
         </div>
         <div className="w-2/3 flex font-semibold justify-center p-2 rounded-xl text-xs items-center bg-[#96E072]">
           Employee
         </div>
-      </div>
+      </div> */}
       {/* <!-- SIDEBAR HEADER --> */}
 
       <div className="flex flex-col justify-end items-end duration-300 ease-linear">

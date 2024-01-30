@@ -21,7 +21,7 @@ const SigninPage = () => {
       console.log(email, password);
       console.log({ res });
       console.log(res.user.uid);
-      sessionStorage.setItem("user", true);
+      sessionStorage.setItem("user", res.user.uid.toString());
       setEmail("");
       setPassword("");
       router.push("/User");

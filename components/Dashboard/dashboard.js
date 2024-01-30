@@ -1,25 +1,35 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Dashboard = () => {
-  const [category, setCategory] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState([]);
-  const router = useRouter();
+  const [userDetails, setUserDetails] = useState(null);
+  //const userId = sessionStorage.getItem("user");
 
-  const handleSearch = () => {
-    // Handle search logic based on selected category and search term
-    // Update the results based on the search
-    // ...
-  };
+  console.log(userDetails);
 
+  useEffect(() => {
+    // Fetch user details after successful sign-in
+    const userId = sessionStorage.getItem("user");
+    console.log("janjn", userId); // assuming you store the user ID in sessionStorage
+
+    // Make an API request to fetch user details based on userId
+    // Use your backend API URL
+    fetch(`http://localhost:3001/User/${userId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUserDetails(data.result);
+      })
+      .catch((error) => {
+        console.error("Error fetching user details:", error);
+      });
+  }, []); // Run the effect once after component mount
+
+  // ... rest of your component code
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 1 } },
   };
-
   return (
     <motion.div
       variants={containerVariants}
@@ -28,51 +38,12 @@ const Dashboard = () => {
       className="bg-gray-100 min-h-screen flex flex-col items-center justify-center"
     >
       <h1 className="text-4xl font-bold mb-8">Dashboard</h1>
-      <div className="flex mb-4">
-        <button
-          onClick={() => setCategory("jobs")}
-          className="bg-blue-500 text-white rounded p-4 mr-4"
-        >
-          Jobs
-        </button>
-        <button
-          onClick={() => setCategory("courses")}
-          className="bg-blue-500 text-white rounded p-4"
-        >
-          Courses
-        </button>
-      </div>
-      {category && (
-        <div className="mb-8">
-          <input
-            type="text"
-            placeholder={`Enter the ${
-              category === "jobs" ? "job" : "course"
-            } you want to see`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-4 border rounded"
-          />
-          <button
-            onClick={handleSearch}
-            className="bg-blue-500 text-white rounded p-4 ml-4"
-          >
-            Search
-          </button>
-        </div>
+      {userDetails && (
+        <p className="mb-4">
+          Welcome, {userDetails.fullname}! {/* Display user's name */}
+        </p>
       )}
-      {results.length > 0 && (
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Results</h2>
-          <ul>
-            {results.map((result, index) => (
-              <li key={index} className="mb-2">
-                {result}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* ... rest of your component code */}
     </motion.div>
   );
 };
