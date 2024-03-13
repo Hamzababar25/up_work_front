@@ -10,8 +10,15 @@ const FirstPage = () => {
     <div className="bg-gray-100">
       <header className="bg-white shadow">
         <div className="container mx-auto py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-gray-800">
-            Women Empowerment Platform
+          <div className="text-2xl flex font-bold text-gray-800">
+            <a href="https://flowbite.com" class="">
+              <img
+                src="https://flowbite.com/docs/images/logo.svg"
+                class="h-8 me-2"
+                alt="FlowBite Logo"
+              />
+            </a>
+            HerCareer
           </div>
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -117,7 +124,7 @@ const FirstPage = () => {
             </div>
             <div className="mt-12">
               <img
-                src="educational-pic.jpg"
+                src="jnjn.avif"
                 alt="Educational Pic"
                 className="w-full rounded-lg"
               />

@@ -1,6 +1,7 @@
 "use client";
 import { Dialog, Transition } from "@headlessui/react";
 import React, { useState, useEffect, Fragment, useRef } from "react";
+import { CldVideoPlayer } from "next-cloudinary";
 import Link from "next/link";
 import {
   Select,
@@ -16,6 +17,7 @@ import { BsUpload } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 //import utility from "../utils/utility";
 import { IoIosCloseCircle } from "react-icons/io";
+import utility from "../utils/utility";
 
 function MyProfilePage() {
   const [isHidden, setIsHidden] = useState(true);
@@ -29,29 +31,73 @@ function MyProfilePage() {
   const cancelButtonRef = useRef(null);
   const [changeImage, setChangeImage] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
   console.log("data", userDetails);
+  const userId = sessionStorage.getItem("user");
 
   const handleEditClickFalse = () => {
     // Update the isHidden state to false when the "Edit" link is clicked
     setIsHidden(false);
   };
-  const handleEditClickTrue = () => {
+  async function handleEditClickTrue() {
+    try {
+      // Prepare data to send in the PUT request
+      const requestData = {
+        file: selectedFile, // Assuming you have a file input for image
+        videofile: selectedVideo, // Assuming you have a file input for video
+        fullname: FirstName + LastName, // Assuming you have a file input for
+        phoneNumber: PhoneNumber,
+        dob: DOB,
+      };
+
+      // Make the PUT request to your API endpoint
+      const response = await fetch(`http://localhost:3001/User/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any other headers as needed
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        // Handle error here
+
+        console.error("Error updating user:", response.statusText);
+        return;
+      }
+
+      // Assuming your API returns a JSON response
+      const responseData = await response.json();
+      setUserDetails({});
+      // Check the success flag in the response
+      if (responseData.success) {
+        // Optionally, update local state or perform any other actions
+        console.log("User updated successfully:", responseData.result);
+      } else {
+        // Handle API response failure
+        console.error("Error updating user:", responseData.error);
+      }
+    } catch (error) {
+      // Handle any unexpected errors
+      console.error("An error occurred:", error);
+    }
     // Update the isHidden state to false when the "Edit" link is clicked
     setIsHidden(true);
-  };
+  }
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
-  const userId = sessionStorage.getItem("user");
 
   useEffect(() => {
     // Fetch user details after successful sign-in
-    const userId = sessionStorage.getItem("user");
-    console.log("janjn", userId); // assuming you store the user ID in sessionStorage
+    // const userId = sessionStorage.getItem("user");
+    // console.log("janjn", userId); // assuming you store the user ID in sessionStorage
 
     // Make an API request to fetch user details based on userId
     // Use your backend API URL
@@ -59,11 +105,12 @@ function MyProfilePage() {
       .then((response) => response.json())
       .then((data) => {
         setUserDetails(data.result);
+        console.log("data", data.result);
       })
       .catch((error) => {
         console.error("Error fetching user details:", error);
       });
-  }, []); // Run
+  }, [Object.keys(userDetails).length]); // Run
 
   const handleImage = (e) => {
     let file = null;
@@ -94,17 +141,29 @@ function MyProfilePage() {
     setSelectedFile(null);
     setChangeImage(false);
   };
-  function handleVideo(event) {
-    const file = event.target.files[0];
+  function handleVideo(e) {
+    let file = null;
+    file = URL.createObjectURL(e.target.files[0]);
 
-    // Validate the file type
-    if (file.type.startsWith("video/")) {
-      // Process the video file, e.g. upload to a server, display a preview, etc.
-      console.log("Video file selected:", file);
-    } else {
-      // Handle invalid file type
-      console.error("Invalid file type. Please select a video file.");
-    }
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      setVideoUrl(reader.result);
+
+      setSelectedVideo(e.target.files[0]);
+
+      utility
+        .convertBase64(e.target.files[0])
+        .then((response) => {
+          let convertedFile = response;
+
+          setSelectedVideo(convertedFile);
+        })
+        .catch((error) => {
+          toast.error("file can not be converted into base64");
+        });
+    };
+    reader.onerror = function (error) {};
   }
   return (
     <div className="w-full">
@@ -112,77 +171,67 @@ function MyProfilePage() {
         <h1 className="text-2xl font-semibold  text-black">Profile </h1>{" "}
       </div>
       {isHidden ? (
-        <div className="bg-white p-5">
-          <div className="flex h-1/4 w-full  items-center pl-5 ">
-            <div className=" h-2/3 w-28 rounded-full  ">
-              {" "}
+        <div className="bg-white p-8 rounded-lg shadow-md">
+          <div className="flex items-center space-x-8">
+            <div className="flex-shrink-0">
               <img
                 src={userDetails?.image}
-                className=" rounded-full  object-scale-down h-28 w-96 border border-blue-100 ..."
+                alt="User Profile"
+                className="rounded-full h-40 w-40 border-4 border-green-500 object-cover"
               />
             </div>
-
-            <div className=" flex flex-col gap-1 h-3/4 w-4/5 pl-6  ">
-              <div className="h-1/4 w-1/2  text-2xl font-medium">
-                {FirstName}
-              </div>
-              <div className="h-1/4 w-1/2 pt-1 text-opacity-75 text-gray-600 text-base ">
+            <div className="flex flex-col gap-4">
+              <div className="text-3xl font-bold">{FirstName}</div>
+              <div className="text-base text-opacity-75 text-gray-600">
                 {LastName}
               </div>
-              <div className="h-1/4 w-1/2 text-opacity-75 text-gray-600 text-base">
+              <div className="text-base text-opacity-75 text-gray-600">
                 {CompanyName}
               </div>
-              <div className=" h-2/3 w-28 rounded-full  ">
-                {" "}
-                <video
-                  src={userDetails?.video}
-                  className="rounded-full object-scale-down h-28 w-96 border border-blue-100"
-                  controls
-                />
-              </div>
             </div>
-
-            <div className="flex h-1/4 w-1/6 mb-20 justify-center  ">
-              {" "}
+            <div className="ml-auto">
               <button
                 className="flex items-center justify-center px-4 py-2 bg-[#A5CD39] text-white rounded-lg"
                 onClick={handleEditClickFalse}
               >
-                {" "}
-                <FaRegEdit className="text-xl   text-white" />
-                <p className="w-10 "> Edit</p>{" "}
-              </button>{" "}
+                <FaRegEdit className="text-xl text-white" />
+                <p className="ml-2">Edit</p>
+              </button>
             </div>
           </div>
 
-          <div className="flex flex-col gap-3 h-1/4 w-full   pl-7 ">
-            <div className=" flex h-1/6 w-1/4   ">
-              <p className="text-2xl font-medium">Personal Information</p>{" "}
+          <div className="mt-8">
+            <div className="text-2xl font-medium mb-4">
+              Personal Information
             </div>
-            <div className=" flex gap-24 h-1/6 w-1/4   ">
-              <p className="text-opacity-80 text-gray-600 text-base">Email:</p>{" "}
-              <p className="text-black font-normal">{userDetails?.mail}</p>{" "}
+            <div className="grid grid-cols-2 gap-8">
+              <div className="col-span-2 md:col-span-1 bg-white p-4 rounded-lg shadow-md">
+                <p className="text-gray-600 text-sm mb-2">Email:</p>
+                <p className="text-black font-medium">{userDetails?.mail}</p>
+              </div>
+              <div className="col-span-2 md:col-span-1 bg-white p-4 rounded-lg shadow-md">
+                <p className="text-gray-600 text-sm mb-2">Phone:</p>
+                <p className="text-black font-medium">
+                  {userDetails?.phoneNumber}
+                </p>
+              </div>
+              <div className="col-span-2 bg-white p-4 rounded-lg shadow-md">
+                <p className="text-gray-600 text-sm mb-2">Full Name:</p>
+                <p className="text-black font-medium">
+                  {userDetails?.fullname}
+                </p>
+              </div>
             </div>
-            <div className=" flex gap-24 h-1/6 w-1/4   ">
-              <p className="text-opacity-80 text-gray-600 text-base">Phone:</p>{" "}
-              <p className="text-black font-normal">
-                {userDetails?.phoneNumber}
-              </p>{" "}
-            </div>
-            <div className=" flex gap-20 h-1/6 w-1/4   ">
-              <p className="text-opacity-80 text-gray-600 text-base">
-                FullName:
-              </p>{" "}
-              <p className="text-black font-normal">{userDetails?.fullname}</p>{" "}
-            </div>
-            <div>
-              {/* Display the uploaded video
-              {selectedVideo && (
-                <video controls>
-                  <source src={selectedVideo} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              )} */}
+          </div>
+
+          <div className="mt-8">
+            <div className="text-2xl font-medium">Uploaded Resume</div>
+            <div className="flex justify-center mt-4">
+              <video
+                src={userDetails?.video}
+                className="rounded-lg object-cover h-96 w-2/3 border-4 border-green-500"
+                controls
+              />
             </div>
           </div>
         </div>
@@ -439,13 +488,15 @@ function MyProfilePage() {
               />{" "}
             </div>
 
-            <div className="flex flex-col gap-2 h-20 w-1/3">
+            <div className="flex flex-col gap-2 h-32 w-1/3 bg-black">
               <label htmlFor="video">Upload Resume Video</label>
               <input
                 id="video"
                 type="file"
                 accept="video/*"
-                onChange={handleVideo}
+                onChange={(e) => {
+                  handleVideo(e);
+                }}
               />
             </div>
           </div>
