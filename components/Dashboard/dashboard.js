@@ -37,7 +37,7 @@ const Dashboard = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="bg-gray-100 min-h-screen p-8"
+      className="bg-gray-100 min-h-screen p-8  "
     >
       {userDetails && (
         <div className="mb-8 text-center">

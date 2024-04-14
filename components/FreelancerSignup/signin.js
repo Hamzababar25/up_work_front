@@ -5,6 +5,7 @@ import { auth } from "../../app/firebase/config";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -17,16 +18,33 @@ const SigninPage = () => {
 
   const handleSignIn = async () => {
     try {
-      const res = await signInWithEmailAndPassword(email, password);
-      console.log(email, password);
-      console.log({ res });
-      console.log(res.user.uid);
-      sessionStorage.setItem("user", res.user.uid.toString());
-      setEmail("");
-      setPassword("");
-      router.push("/User");
+      const response = await axios.get(
+        `http://localhost:3001/User/one/${email}`
+      );
+      const user = response.data;
+      // console.log(user.result.usertype);
+
+      // Check if the user exists and has the correct user type
+      if (user && user.result.usertype !== "user") {
+        setEmailErrorMessage(
+          "Invalid credentials please write correct mail or password"
+        );
+      } else if (!user) {
+        setEmailErrorMessage(
+          "Invalid credentials please write correct mail or password"
+        );
+      } else {
+        const res = await signInWithEmailAndPassword(email, password);
+        // console.log(email, password);
+        // console.log({ res });
+        // console.log(res.user.uid);
+        sessionStorage.setItem("user", res.user.uid.toString());
+        setEmail("");
+        setPassword("");
+        router.push("/User");
+      }
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   };
   //   // Handle signup logic, such as sending the form data to the server
@@ -51,6 +69,12 @@ const SigninPage = () => {
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
         className="bg-white p-8 rounded shadow-md max-w-lg w-full"
       >
+        {emailErrorMessage && (
+          <div className="text-red-500 text-center mb-6">
+            {emailErrorMessage}
+          </div>
+        )}
+
         <h1 className="text-4xl font-bold mb-8 text-center">Login</h1>
 
         <div className="mb-8">
@@ -88,13 +112,10 @@ const SigninPage = () => {
         {showSuccessMessage && (
           <p className="text-green-500 text-center">Logged in successfully</p>
         )}
-        {emailErrorMessage && (
-          <div className="text-green-500 text-center">{emailErrorMessage}</div>
-        )}
 
         <p className="text-center text-gray-600">
           Dont have an account?{" "}
-          <a href="/login" className="text-blue-500">
+          <a href="/auth/FreelanceSignup" className="text-blue-500">
             Click here to signup
           </a>
         </p>

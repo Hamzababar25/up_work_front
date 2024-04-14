@@ -35,7 +35,9 @@ const SignupPage = ({ apisignup }) => {
         // userId: res.user.uid,
         id: res.user.uid,
         mail: res.user.email,
-        fullname: firstName + " " + lastName, // Pass the displayName
+        fullname: firstName + " " + lastName,
+        usertype: "user",
+        // Pass the displayName
       });
       sessionStorage.setItem("user", true);
       setEmail("");
