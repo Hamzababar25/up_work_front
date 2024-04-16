@@ -2,8 +2,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 // const jobsData = [
 //   {
@@ -27,8 +25,7 @@ import { useRouter } from "next/navigation";
 //   // Add more job data as needed
 // ];
 
-const JobsPage = () => {
-  const router = useRouter();
+const JobsDetailPage = () => {
   const [jobsData, setJobsData] = useState([]);
 
   useEffect(() => {
@@ -49,23 +46,18 @@ const JobsPage = () => {
       <h1 className="text-4xl font-bold mb-8">Jobs</h1>
       <div>
         {jobsData.map((job, index) => (
-          <Link href={`/User/jobDetails?jobId=${job.id}`} key={index}>
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white rounded p-4 mb-4"
-              // onClick={router.push(`/User/jobDetails?jobId=${job.id}`)}
-            >
-              <h2 className="text-xl font-bold">{job.title}</h2>
-              <p className="text-gray-600 mb-2">{job.description}</p>
-              <p className="text-blue-500 font-bold">${job.budget} per hour</p>
-            </motion.div>
-          </Link>
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-white rounded p-4 mb-4"
+          >
+            <h2 className="text-xl font-bold">{job.title}</h2>
+          </motion.div>
         ))}
       </div>
     </div>
   );
 };
 
-export default JobsPage;
+export default JobsDetailPage;
