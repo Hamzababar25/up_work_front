@@ -1,10 +1,25 @@
 import JobsDetailPage from "../../../components/JobDetails/jobDetails";
-export default function Page({ params, searchParams }) {
-  console.log("svv", params);
-  console.log("4", searchParams);
-  return (
-    <main className="">
-      <JobsDetailPage />
-    </main>
-  );
+import axios from "axios";
+
+async function jobDetail({ searchParams }) {
+  console.log("4", searchParams.jobId);
+
+  try {
+    const response = await axios.get(
+      `http://localhost:3001/Jobs/${searchParams.jobId}`
+    );
+    const JobData = response.data.result;
+    console.log(JobData, "jnj");
+
+    return (
+      <main className="">
+        <JobsDetailPage apiJobData={JobData} />
+      </main>
+    );
+  } catch (error) {
+    console.error("Error fetching job details:", error);
+    return null; // or handle the error in some way
+  }
 }
+
+export default jobDetail;
