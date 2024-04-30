@@ -70,7 +70,7 @@ const JobsPage = () => {
                 <p className="text-gray-600 mb-2 mt-6">{job.description}</p>
                 <p className="text-lg font-bold mt-16"> Skills Required</p>
                 <div className="flex flex-wrap mt-4 ml-6">
-                  {job.key_list &&
+                  {job.key_list !== undefined &&
                     job.key_list.map((keyItem, index) => (
                       <div key={index} className="flex items-center mb-2 mr-4">
                         <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>

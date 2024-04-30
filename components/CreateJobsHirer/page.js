@@ -27,7 +27,7 @@ const CreateJobsHirer = () => {
           budget: budget,
           description: description,
           key_list: keyListArray, // Replace 'job_id_here' with the actual job ID
-          user: userId, // Replace 'user_id_here' with the actual user ID
+          hirer: userId, // Replace 'user_id_here' with the actual user ID
         }),
       });
       if (response.ok) {
