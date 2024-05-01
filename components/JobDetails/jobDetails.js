@@ -70,11 +70,11 @@ function JobsDetailPage({ apiJobData }) {
     <div className="bg-gray-100 min-h-screen p-8">
       <h1 className="text-2xl font-semibold mb-8">{jobsData.title}</h1>
       <div className="flex mb-8 gap-x-4 border-b border-blue-400">
-        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border-b border-blue-500 hover:border-transparent ">
+        {/* <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border-b border-blue-500 hover:border-transparent ">
           Details
-        </button>
+        </button> */}
         <Link
-          href={`/User/jobDetails?jobId=${apiJobData.id}`}
+          href={`/User/JobProposals?jobId=${apiJobData.id}`}
           className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border-b border-blue-500 hover:border-transparent "
         >
           Proposals

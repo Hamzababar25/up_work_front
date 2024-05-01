@@ -1,4 +1,4 @@
-import JobsDetailPage from "../../../components/JobDetails/jobDetails";
+import JobsProposals from "../../../components/JobProposals/page";
 import axios from "axios";
 
 async function jobDetail({ searchParams }) {
@@ -13,7 +13,7 @@ async function jobDetail({ searchParams }) {
 
     return (
       <main className="">
-        <JobsDetailPage apiJobData={JobData} />
+        <JobsProposals apiJobData={JobData} />
       </main>
     );
   } catch (error) {
