@@ -8,7 +8,7 @@ async function jobDetail({ searchParams }) {
     const response = await axios.get(
       `http://localhost:3001/Jobs/${searchParams.jobId}`
     );
-    const JobData = response.data.result;
+    const JobData = response.data.result.job;
     console.log(JobData, "jnj");
 
     return (

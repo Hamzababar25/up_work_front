@@ -1,4 +1,4 @@
-import JobsProposals from "../../../components/JobProposals/page";
+import HirerJobProposals from "../../../components/HirerJobProposals/page";
 import axios from "axios";
 
 async function jobDetail({ searchParams }) {
@@ -9,11 +9,11 @@ async function jobDetail({ searchParams }) {
       `http://localhost:3001/Jobs/${searchParams.jobId}`
     );
     const JobData = response.data.result.job;
-    console.log(JobData, "jnj");
+    console.log(JobData, "bruhh");
 
     return (
       <main className="">
-        <JobsProposals apiJobData={JobData} />
+        <HirerJobProposals apiJobData={JobData} />
       </main>
     );
   } catch (error) {
