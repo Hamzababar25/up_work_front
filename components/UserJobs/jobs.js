@@ -62,9 +62,24 @@ const JobsPage = () => {
         ) : (
           jobsData.map((job, index) => (
             <Link href={`/User/jobDetails?jobId=${job.id}`} key={index}>
-              <div className="bg-white rounded p-4 mb-4 cursor-pointer">
-                <h2 className="text-xl font-bold">{job.title}</h2>
-                <p className="text-blue-600 font-bold mb-2 mt-6">
+              <div className="bg-white rounded p-4 mb-4 cursor-pointer ">
+                <div className=" flex   ">
+                  <div className="w-2/4 ">
+                    <h2 className="text-xl font-bold ">{job.title}</h2>
+                  </div>
+
+                  <div className="w-2/4 flex justify-center ">
+                    <div className="  flex text-lg font-bold    ">
+                      <h1>{job.bidCount} Bids</h1>
+                      <h1 className="ml-10 rounded-full pl-3   bg-green-500 text-gray-100 w-20 h-8">
+                        {job.status ? "Open" : "Closed"}
+                      </h1>{" "}
+                      {/* Conditional rendering of status */}{" "}
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-blue-600 font-bold mb-2 mt-4">
                   {job.budget}
                 </p>
                 <p className="text-gray-600 mb-2 mt-6">{job.description}</p>

@@ -92,7 +92,7 @@ function HirerJobDetail({ apiJobData, apiUserData, apiBidData }) {
           <div className="flex-shrink-0">
             {userData ? (
               <img
-                src="/jnjn.avif"
+                src={userData.image}
                 alt="User Profile"
                 className="rounded-full h-40 w-40 border-4 border-green-500 object-cover"
               />
@@ -185,6 +185,7 @@ function HirerJobDetail({ apiJobData, apiUserData, apiBidData }) {
         </motion.div>
       </div> */}
       <div>
+        <div className="mb-5 mt-5 text-xl font-bold">Accepted Bid</div>
         <motion.div
           //   key={index}
           whileHover={{ scale: 1.05 }}

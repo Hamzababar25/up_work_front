@@ -7,21 +7,17 @@ const HirerJobProposals = ({ apiJobData }) => {
   const [jobsData, setJobsData] = useState([]);
   const [bidPlaced, setBidPlaced] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (apiJobData && apiJobData.bids) {
       setJobsData(apiJobData.bids);
 
       // Logging bid user data to console
-      console.log(
-        "Bid User Data:",
-        apiJobData.bids.map((bid) => bid.user)
-      );
     }
   }, [apiJobData]);
 
   const handleAcceptBid = async function (jobid, bidid) {
-    console.log(jobid, bidid, "bukala");
     try {
       const response = await fetch(
         `http://localhost:3001/Jobs/${jobid}/accept-bid`,
@@ -35,23 +31,29 @@ const HirerJobProposals = ({ apiJobData }) => {
           }),
         }
       );
+      console.log("response", response);
       if (response.ok) {
         console.log("Job Posted successfully!");
         setSuccessMessage("Bid accepted successfully!"); // Set success message
         setTimeout(() => {
           setSuccessMessage(""); // Clear success message after 3 seconds
-        }, 3000);
+        }, 5000);
 
         // You can add further logic here, such as displaying a success message or redirecting the user
       } else {
-        console.error("Failed to place bid:", response.statusText);
-        setSuccessMessage(response.statusText); // Set success message
-        setTimeout(() => {
-          setSuccessMessage(""); // Clear success message after 3 seconds
-        }, 3000);
-        // Handle error conditions here
+        const errorData = await response.json();
+        console.log("err", errorData); // Parse error response
+        if (errorData.message) {
+          setErrorMessage(errorData.message); // Set success message
+          setTimeout(() => {
+            setErrorMessage(""); // Clear success message after 3 seconds
+          }, 5000);
+        } else {
+          setErrorMessage("Failed to accept bid"); // Default error message
+        }
       }
     } catch (error) {
+      console.log("err", error.message);
       console.error("Error placing bid:", error);
       // Handle network errors or other exceptions here
     }
@@ -121,13 +123,18 @@ const HirerJobProposals = ({ apiJobData }) => {
                     onClick={() => {
                       handleAcceptBid(apiJobData.id, job.id);
                     }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md absolute bottom-1 right-6"
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md absolute bottom-6 right-4"
                   >
-                    Accept Job
+                    Accept Bid
                   </button>
                   {successMessage && (
-                    <p className="text-green-500 absolute top-0 right-6 mt-2">
+                    <p className="text-green-500 text-lg absolute top-8 right-6 ">
                       {successMessage}
+                    </p>
+                  )}
+                  {errorMessage && (
+                    <p className="text-red-500 text-lg absolute top-8 right-6 ">
+                      {errorMessage}
                     </p>
                   )}
                 </div>
