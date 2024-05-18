@@ -115,8 +115,13 @@ const SigninPage = () => {
         {showSuccessMessage && (
           <p className="text-green-500 text-center">Logged in successfully</p>
         )}
-
         <p className="text-center text-gray-600">
+          <a href="/auth/HirerForgotPassword" className="text-blue-500">
+            Forgot Password?
+          </a>
+        </p>
+
+        <p className="text-center text-gray-600 pt-4">
           Dont have an account?{" "}
           <a href="/auth/HirerSignup" className="text-blue-500">
             Click here to signup
