@@ -1,10 +1,34 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { auth } from "../../../app/firebase/config";
+import { useRouter } from "next/navigation";
 
 //import logo from "@/img/logo.svg";
 
 export default function Sidebar({ show, setter }) {
   const [open, setOpen] = useState(true);
+  const router = useRouter();
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    // console.log("log", isLogoutModalOpen);
+    if (confirmLogout) {
+      // Perform logout logic here, such as clearing session storage or calling an API
+      // sessionStorage.removeItem("user");
+      auth
+        .signOut()
+        .then(() => {
+          // Sign-out successful.
+          // setIsLogoutModalOpen(false);
+          router.push("/auth/FreelanceSignup"); // Close the modal after logout
+          // Optionally, you can redirect the user to the login page or any other page
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error("Logout error:", error);
+        });
+      // Redirect or perform any additional actions after logout
+    }
+  };
 
   return (
     <div>
@@ -170,6 +194,7 @@ export default function Sidebar({ show, setter }) {
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={handleLogout}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

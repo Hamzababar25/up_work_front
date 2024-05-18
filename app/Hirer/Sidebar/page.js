@@ -1,10 +1,36 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { auth } from "../../../app/firebase/config";
+import { useRouter } from "next/navigation";
 
 //import logo from "@/img/logo.svg";
 
 export default function Sidebar({ show, setter }) {
   const [open, setOpen] = useState(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    // console.log("log", isLogoutModalOpen);
+    if (confirmLogout) {
+      // Perform logout logic here, such as clearing session storage or calling an API
+      // sessionStorage.removeItem("user");
+      auth
+        .signOut()
+        .then(() => {
+          // Sign-out successful.
+          // setIsLogoutModalOpen(false);
+          router.push("/auth/HirerSignup"); // Close the modal after logout
+          // Optionally, you can redirect the user to the login page or any other page
+        })
+        .catch((error) => {
+          // An error happened.
+          console.error("Logout error:", error);
+        });
+      // Redirect or perform any additional actions after logout
+    }
+  };
 
   return (
     <div>
@@ -59,7 +85,7 @@ export default function Sidebar({ show, setter }) {
           <ul class="space-y-2 font-medium">
             <li>
               <a
-                href="/User"
+                href="/Hirer"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -109,7 +135,7 @@ export default function Sidebar({ show, setter }) {
                 <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="/User/jobs"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -125,7 +151,7 @@ export default function Sidebar({ show, setter }) {
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Jobs</span>
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 href="/Hirer/HirerJobs"
@@ -169,7 +195,8 @@ export default function Sidebar({ show, setter }) {
             <li>
               <a
                 href="#"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group mt-20"
+                onClick={handleLogout}
               >
                 <svg
                   class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -188,6 +215,28 @@ export default function Sidebar({ show, setter }) {
           </ul>
         </div>
       </aside>
+      {/* Logout confirmation modal */}
+      {/* {isLogoutModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded shadow-lg z-100">
+            <p>Are you sure you want to log out?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                className="mr-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={handleConfirmLogout}
+              >
+                Yes
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                onClick={handleCloseModal}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )} */}
     </div>
   );
 }
