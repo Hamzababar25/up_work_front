@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../../../app/firebase/config";
 import { useRouter } from "next/navigation";
+import { FaDiscourse } from "react-icons/fa";
 
 //import logo from "@/img/logo.svg";
 
@@ -169,7 +170,7 @@ export default function Sidebar({ show, setter }) {
             </li>
             <li>
               <a
-                href="#"
+                href="/User/Courses"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -188,6 +189,16 @@ export default function Sidebar({ show, setter }) {
                   />
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Courses</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/User/UserCourses"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <FaDiscourse />
+
+                <span class="flex-1 ms-3 whitespace-nowrap">My Courses</span>
               </a>
             </li>
             <li>
