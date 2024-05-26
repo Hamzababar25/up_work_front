@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../../app/firebase/config";
 import { useRouter } from "next/navigation";
 import { FaDiscourse } from "react-icons/fa";
+import { MdVerifiedUser } from "react-icons/md";
 
 //import logo from "@/img/logo.svg";
 
@@ -199,6 +200,17 @@ export default function Sidebar({ show, setter }) {
                 <FaDiscourse />
 
                 <span class="flex-1 ms-3 whitespace-nowrap">My Courses</span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="/User/Verification"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <MdVerifiedUser />
+
+                <span class="flex-1 ms-3 whitespace-nowrap">Verify</span>
               </a>
             </li>
             <li>

@@ -37,29 +37,6 @@ function GETUserCourses({ page }) {
     fetchData();
   }, [page]);
 
-  console.log("yolo", userData);
-  const handleEnroll = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:3001/User/enrollCourse`,
-        {
-          userId: userId, // Replace with actual user ID
-          courseId: selectedCourse.id,
-        }
-      );
-
-      if (response.status === 200) {
-        alert("Enrolled successfully!");
-      } else {
-        console.error("Enrollment failed:", response.data.error);
-      }
-    } catch (error) {
-      console.error("Error enrolling in course:", error);
-    } finally {
-      setIsModalOpen(false);
-    }
-  };
-
   // console.log(userData);
   return (
     <div className="">
@@ -69,26 +46,25 @@ function GETUserCourses({ page }) {
 
       <div class="grid-cols-1 sm:grid md:grid-cols-2 xl:grid-cols-3 mt-10 gap-y-10 ">
         {userData?.map((user) => (
-          <div
-            class="block max-w-[20rem] rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
-            onClick={() => {
-              setSelectedCourse(user);
-              setIsModalOpen(true);
-            }}
-          >
-            <div class="relative overflow-hidden bg-cover bg-no-repeat">
-              {user?.image ? (
-                <img class="rounded-t-lg w-full" src={user.image} alt="" />
-              ) : (
-                <img class="rounded-t-lg w-full" src="/emp.png" alt="" />
-              )}
+          <Link href={`/User/CourseDetails?courseId=${user.id}`}>
+            <div
+              class="block max-w-[20rem] rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
+              onClick={() => {}}
+            >
+              <div class="relative overflow-hidden bg-cover bg-no-repeat">
+                {user?.image ? (
+                  <img class="rounded-t-lg w-full" src={user.image} alt="" />
+                ) : (
+                  <img class="rounded-t-lg w-full" src="/emp.png" alt="" />
+                )}
+              </div>
+              <div class="p-6 flex flex-col space-y-2 items-center bg-white border">
+                <p class="text-base">{user.title}</p>
+                <p className="text-blue-700">{user.description}</p>
+                {/* <p>{user.phoneNumber}</p> */}
+              </div>
             </div>
-            <div class="p-6 flex flex-col space-y-2 items-center bg-white border">
-              <p class="text-base">{user.title}</p>
-              <p className="text-blue-700">{user.description}</p>
-              {/* <p>{user.phoneNumber}</p> */}
-            </div>
-          </div>
+          </Link>
         ))}{" "}
       </div>
 
