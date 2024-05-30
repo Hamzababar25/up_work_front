@@ -2,10 +2,15 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../../../app/firebase/config";
 import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "../../firebase/config";
+import MessagesList from "../../../components//messageList/MessagesList";
 
 //import logo from "@/img/logo.svg";
 
 export default function Sidebar({ show, setter }) {
+  const [user] = useAuthState(auth);
+  const [showMessages, setShowMessages] = useState(false);
   const [open, setOpen] = useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const router = useRouter();
@@ -52,6 +57,19 @@ export default function Sidebar({ show, setter }) {
             <div class="flex items-center">
               <div class="flex items-center ms-3">
                 <div>
+                  {user && (
+                    <div>
+                      <button
+                        onClick={() => {
+                          console.log("Messages button clicked");
+                          setShowMessages(!showMessages);
+                        }}
+                      >
+                        Messages
+                      </button>
+                      {showMessages && <MessagesList user={user} />}
+                    </div>
+                  )}
                   <button
                     type="button"
                     class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
