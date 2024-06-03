@@ -37,6 +37,7 @@ function HirerProfilePage() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [userLoading, setUserLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+  const [city, setCity] = useState("");
   console.log("data", userDetails);
   const userId = sessionStorage.getItem("user");
 
@@ -50,13 +51,15 @@ function HirerProfilePage() {
       const requestData = {
         file: selectedFile, // Assuming you have a file input for image
         videofile: selectedVideo, // Assuming you have a file input for video
-        fullname: FirstName + LastName, // Assuming you have a file input for
+        // Assuming you have a file input for
         phoneNumber: PhoneNumber,
+
+        City: city,
         dob: DOB,
       };
 
       // Make the PUT request to your API endpoint
-      const response = await fetch(`http://localhost:3001/User/${userId}`, {
+      const response = await fetch(`http://localhost:3001/Hirer/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -95,12 +98,6 @@ function HirerProfilePage() {
   };
 
   useEffect(() => {
-    // Fetch user details after successful sign-in
-    // const userId = sessionStorage.getItem("user");
-    // console.log("janjn", userId); // assuming you store the user ID in sessionStorage
-
-    // Make an API request to fetch user details based on userId
-    // Use your backend API URL
     fetch(`http://localhost:3001/Hirer/${userId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -180,11 +177,9 @@ function HirerProfilePage() {
                 className="rounded-full h-40 w-40 border-4 border-green-500 object-cover"
               />
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
               <div className="text-3xl font-bold">{FirstName}</div>
-              <div className="text-base text-opacity-75 text-gray-600">
-                {LastName}
-              </div>
+              <div className="text-3xl font-bold">{LastName}</div>
               <div className="text-base text-opacity-75 text-gray-600">
                 {CompanyName}
               </div>
@@ -221,11 +216,19 @@ function HirerProfilePage() {
                   {userDetails?.fullname}
                 </p>
               </div>
+              <div className="col-span-2 bg-white p-4 rounded-lg shadow-md">
+                <p className="text-gray-600 text-sm mb-2">City:</p>
+                <p className="text-black font-medium">{userDetails?.City}</p>
+              </div>
+              <div className="col-span-2 bg-white p-4 rounded-lg shadow-md">
+                <p className="text-gray-600 text-sm mb-2">DOB:</p>
+                <p className="text-black font-medium">{userDetails?.dob}</p>
+              </div>
             </div>
           </div>
 
           <div className="mt-8">
-            <div className="text-2xl font-medium">Uploaded Resume</div>
+            <div className="text-2xl font-medium">Uploaded Introducton</div>
             <div className="flex justify-center mt-4">
               <video
                 src={userDetails?.video}
@@ -415,35 +418,16 @@ function HirerProfilePage() {
             <div className="flex flex-col gap-2 h-20 w-1/3 ">
               {" "}
               {/* <p className="text-opacity-75 text-gray-600 text-sm">
-                Email
-              </p>{" "} */}
-              <TextField
-                id="standard-basic"
-                type="text"
-                required
-                label="Enter First Name"
-                placeholder="First Name"
-                value={FirstName}
-                onChange={(e) => {
-                  setFirstName(e.target.value);
-                }}
-                size="small"
-                className="w-full  rounded-md border  bg-[#F7F8F9]"
-              />{" "}
-            </div>
-            <div className="flex flex-col gap-2 h-20 w-1/3 ">
-              {" "}
-              {/* <p className="text-opacity-75 text-gray-600 text-sm">
                 Last Name
               </p>{" "} */}
               <TextField
                 id="standard-basic"
-                label="Enter Last Name"
-                placeholder="Last Name"
                 required
-                value={LastName}
+                label="Enter City"
+                placeholder="City Name"
+                value={city}
                 onChange={(e) => {
-                  setLastName(e.target.value);
+                  setCity(e.target.value);
                 }}
                 size="small"
                 className="w-full  rounded-md border  bg-[#F7F8F9]"

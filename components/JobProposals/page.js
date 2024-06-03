@@ -8,6 +8,7 @@ const JobsProposals = ({ apiJobData }) => {
 
   useEffect(() => {
     if (apiJobData && apiJobData.bids) {
+      console.log("yoo", apiJobData.bids);
       setJobsData(apiJobData.bids);
 
       // Logging bid user data to console

@@ -158,18 +158,11 @@ function JobsDetailPage({ apiJobData }) {
           <div className="flex items-center mb-2">
             {jobsData.hirer && (
               <p className="text-blue-500">
-                Location{" "}
-                <span className="ml-10">{jobsData.hirer.location}</span>
+                Location <span className="ml-10">{jobsData.hirer.City}</span>
               </p>
             )}
           </div>
-          <div className="flex items-center mb-2">
-            {jobsData.hirer && (
-              <p className="text-blue-500">
-                Country <span className="ml-12">{jobsData.hirer.fullname}</span>
-              </p>
-            )}
-          </div>
+
           <div className="flex items-center mb-2">
             {jobsData.hirer && (
               <p className="text-blue-500">

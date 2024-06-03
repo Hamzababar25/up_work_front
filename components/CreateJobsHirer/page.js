@@ -49,9 +49,9 @@ const CreateJobsHirer = () => {
     }
   };
   return (
-    <div className="w-full">
+    <div className="w-full gap-x-4">
       {/* Section with input fields */}
-      <div className="w-1/2 float-left  h-full">
+      <div className="w-5/12 float-left  h-full">
         <h1 className="text-4xl  font-bold mb-6">
           Create Jobs According To Your{" "}
           <span className="text-blue-400">Requirments</span>
@@ -131,8 +131,12 @@ const CreateJobsHirer = () => {
       </div>
 
       {/* Section with image */}
-      <div className="w-1/2 float-left  ">
-        <img src="/jnjn.avif" alt="Image" className="w-full " />
+      <div className="w-1/2 float-left h-[44rem] xl:mt-14 xl:ml-20 lg:mt-20 lg:ml-8 ">
+        <img
+          src="/jnjn.avif"
+          alt="Image"
+          className="w-full h-full object-contain "
+        />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // const jobsData = [
 //   {
@@ -34,15 +35,18 @@ function HirerJobDetail({ apiJobData, apiUserData, apiBidData }) {
   const [bidPlaced, setBidPlaced] = useState(false);
   const [userData, setUserData] = useState([]);
   const [bidData, setBidData] = useState([]);
-  console.log(apiJobData.id, "vd");
   useEffect(() => {
     const userId = sessionStorage.getItem("user");
-    console.log(apiUserData, "habibi");
     setUserId(userId);
     setJobsData(apiJobData);
     setUserData(apiUserData);
     setBidData(apiBidData);
   }, [apiJobData]);
+  const router = useRouter();
+
+  const handleClick = (user) => {
+    router.push(`/Hirer/UserProfile?userId=${user}`);
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-8">
@@ -87,6 +91,9 @@ function HirerJobDetail({ apiJobData, apiUserData, apiBidData }) {
         <motion.div
           whileTap={{ scale: 0.95 }}
           className="bg-white rounded p-4 mb-4 xl:w-1/4 h-2/4 lg:ml-52 xl:ml-2 lg:w-2/4 flex flex-col"
+          onClick={() => {
+            handleClick(userData.id);
+          }}
         >
           <h2 className="text-xl font-bold mb-4">About the freelancer</h2>
           <div className="flex-shrink-0">
