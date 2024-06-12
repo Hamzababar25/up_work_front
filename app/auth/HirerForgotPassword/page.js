@@ -21,7 +21,6 @@ const ForgotPage = () => {
   //   const handleSignIn = async () => {
   //     try {
   //       const response = await axios.get(
-  //         `http://localhost:3001/User/one/${email}`
   //       );
   //       const user = response.data;
   //       // console.log(user.result.usertype);

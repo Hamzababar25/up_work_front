@@ -6,7 +6,7 @@ async function jobDetail({ searchParams }) {
 
   try {
     const response = await axios.get(
-      `http://localhost:3001/Jobs/${searchParams.jobId}`
+      utility.BASE_URL + `Jobs/${searchParams.jobId}`
     );
     const JobData = response.data.result.job;
     const linkedUser = response.data.result.linkedUser;

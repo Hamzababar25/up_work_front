@@ -49,7 +49,7 @@ function UserProfilePage(searchParams) {
 
     // Make an API request to fetch user details based on userId
     // Use your backend API URL
-    fetch(`http://localhost:3001/User/${searchParams.searchParams.userId}`)
+    fetch(utility.BASE_URL + `User/${searchParams.searchParams.userId}`)
       .then((response) => response.json())
       .then((data) => {
         setUserDetails(data.result);
