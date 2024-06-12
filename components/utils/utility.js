@@ -2,7 +2,7 @@ import Promise from "promise";
 
 class Utility {
   constructor() {
-    this.BASE_URL = "localhost:3000/";
+    this.BASE_URL = "https://upwork-back.onrender.com/";
     this.TimeZone = [
       { name: "Africa/Abidjan", abb: "GMT" },
       { name: "Africa/Accra", abb: "GMT" },

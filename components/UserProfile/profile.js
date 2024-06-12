@@ -58,7 +58,7 @@ function MyProfilePage() {
       };
 
       // Make the PUT request to your API endpoint
-      const response = await fetch(`http://localhost:3001/User/${userId}`, {
+      const response = await fetch(utility.BASE_URL + `User/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ function MyProfilePage() {
 
     // Make an API request to fetch user details based on userId
     // Use your backend API URL
-    fetch(`http://localhost:3001/User/${userId}`)
+    fetch(utility.BASE_URL + `User/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         setUserDetails(data.result);

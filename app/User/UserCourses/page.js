@@ -39,7 +39,7 @@ function GETUserCourses({ page }) {
 
   // console.log(userData);
   return (
-    <div className="">
+    <div className="bg-gradient-to-b from-[#F0F4F8] to-[#D9E2EC] min-h-screen">
       <Typography variant="h4" className="mt-2 mb-4 text-gray-800">
         Courses List
       </Typography>
@@ -51,11 +51,19 @@ function GETUserCourses({ page }) {
               class="block max-w-[20rem] rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
               onClick={() => {}}
             >
-              <div class="relative overflow-hidden bg-cover bg-no-repeat">
+              <div class="relative overflow-hidden bg-cover bg-no-repeat h-72">
                 {user?.image ? (
-                  <img class="rounded-t-lg w-full" src={user.image} alt="" />
+                  <img
+                    class="rounded-t-lg w-full h-full object-contain "
+                    src={user.image}
+                    alt=""
+                  />
                 ) : (
-                  <img class="rounded-t-lg w-full" src="/emp.png" alt="" />
+                  <img
+                    class="rounded-t-lg w-full h-full object-contain "
+                    src="/emp.png"
+                    alt=""
+                  />
                 )}
               </div>
               <div class="p-6 flex flex-col space-y-2 items-center bg-white border">
@@ -134,7 +142,7 @@ function GETUserCourses({ page }) {
 
 function UserCourses({}) {
   return (
-    <div>
+    <div className="">
       <GETUserCourses />
     </div>
   );

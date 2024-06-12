@@ -70,29 +70,29 @@ function GETCourses({ page }) {
         Courses List
       </Typography>
 
-      <div class="grid-cols-1 sm:grid md:grid-cols-2 xl:grid-cols-3 mt-10 gap-y-10 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 mt-10 gap-y-10 ">
         {userData?.users.map((user) => (
           <div
-            class="block max-w-[20rem] rounded-lg bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-white"
+            key={user.id}
+            className="block max-w-[20rem] rounded-lg  shadow-secondary-1 dark:bg-surface-dark dark:text-white"
             onClick={() => {
               setSelectedCourse(user);
               setIsModalOpen(true);
             }}
           >
-            <div class="relative overflow-hidden bg-cover bg-no-repeat">
-              {user?.image ? (
-                <img class="rounded-t-lg w-full" src={user.image} alt="" />
-              ) : (
-                <img class="rounded-t-lg w-full" src="/emp.png" alt="" />
-              )}
+            <div className="relative overflow-hidden bg-white bg-cover bg-no-repeat h-64">
+              <img
+                className="w-full h-full object-contain rounded-t-lg"
+                src={user?.image ? user.image : "/emp.png"}
+                alt={user.title}
+              />
             </div>
-            <div class="p-6 flex flex-col space-y-2 items-center bg-white border">
-              <p class="text-base">{user.title}</p>
+            <div className="p-6 flex flex-col space-y-2 items-center bg-white border h-32">
+              <p className="text-base">{user.title}</p>
               <p className="text-blue-700">{user.description}</p>
-              {/* <p>{user.phoneNumber}</p> */}
             </div>
           </div>
-        ))}{" "}
+        ))}
       </div>
       <Transition.Root show={isModalOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={setIsModalOpen}>

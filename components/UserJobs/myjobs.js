@@ -28,7 +28,7 @@ const myJobsData = [
 
 const MyJobsPage = () => {
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
+    <div className=" min-h-screen p-8">
       <h1 className="text-4xl font-bold mb-8">My Jobs</h1>
       <div>
         {myJobsData.map((job, index) => (

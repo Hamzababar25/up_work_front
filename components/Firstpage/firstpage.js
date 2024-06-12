@@ -127,11 +127,11 @@ const FirstPage = () => {
                 Post a Job Opportunity
               </button>
             </div>
-            <div className="mt-12">
+            <div className="mt-12 flex justify-center">
               <img
                 src="jnjn.avif"
                 alt="Educational Pic"
-                className="w-full rounded-lg"
+                className=" w-3/4 rounded-lg "
               />
             </div>
           </div>

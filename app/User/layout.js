@@ -13,8 +13,8 @@ export default function DashboardLayout({ children }) {
         {/* <!-- ===== Header Start ===== --> */}
         <Header />
         {/* <div className="h-[4rem] bg-blue-500"></div> */}
-        <main className="ml-64 pl-10 ">
-          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <main className="ml-64 pl-10 bg-gradient-to-b from-[#F0F4F8] to-[#D9E2EC] ">
+          <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 bg-gradient-to-b from-[#F0F4F8] to-[#D9E2EC]">
             {children}
           </div>
         </main>
