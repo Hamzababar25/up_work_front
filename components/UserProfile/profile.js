@@ -38,6 +38,7 @@ function MyProfilePage() {
   const [userLoading, setUserLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({});
   const [city, setCity] = useState("");
+  const [userDetailsFetched, setUserDetailsFetched] = useState(false);
   console.log("data", userDetails);
   const userId = sessionStorage.getItem("user");
 
@@ -47,15 +48,46 @@ function MyProfilePage() {
   };
   async function handleEditClickTrue() {
     try {
-      // Prepare data to send in the PUT request
-      const requestData = {
-        file: selectedFile, // Assuming you have a file input for image
-        videofile: selectedVideo, // Assuming you have a file input for video
-        fullname: FirstName + LastName, // Assuming you have a file input for
-        phoneNumber: PhoneNumber,
-        dob: DOB,
-        City: city,
-      };
+      // Fetch the current user details
+      const userResponse = await fetch(utility.BASE_URL + `User/${userId}`);
+      if (!userResponse.ok) {
+        console.error("Error fetching user details:", userResponse.statusText);
+        return;
+      }
+      const currentUserDetails = await userResponse.json();
+
+      // Prepare data to send in the PUT request, only updating non-empty fields
+      const requestData = {};
+
+      if (selectedFile) {
+        requestData.file = selectedFile;
+      } else {
+        requestData.file = currentUserDetails.file;
+      }
+
+      if (selectedVideo) {
+        requestData.videofile = selectedVideo;
+      } else {
+        requestData.videofile = currentUserDetails.videofile;
+      }
+
+      if (PhoneNumber) {
+        requestData.phoneNumber = PhoneNumber;
+      } else {
+        requestData.phoneNumber = currentUserDetails.phoneNumber;
+      }
+
+      if (DOB) {
+        requestData.dob = DOB;
+      } else {
+        requestData.dob = currentUserDetails.dob;
+      }
+
+      if (city) {
+        requestData.City = city;
+      } else {
+        requestData.City = currentUserDetails.City;
+      }
 
       // Make the PUT request to your API endpoint
       const response = await fetch(utility.BASE_URL + `User/${userId}`, {
@@ -69,14 +101,13 @@ function MyProfilePage() {
 
       if (!response.ok) {
         // Handle error here
-
         console.error("Error updating user:", response.statusText);
         return;
       }
 
       // Assuming your API returns a JSON response
       const responseData = await response.json();
-      setUserDetails({});
+      setUserDetails(responseData.result || {}); // Update user details with the latest data
       // Check the success flag in the response
       if (responseData.success) {
         // Optionally, update local state or perform any other actions
@@ -107,12 +138,19 @@ function MyProfilePage() {
       .then((response) => response.json())
       .then((data) => {
         setUserDetails(data.result);
+        setUserDetailsFetched(true);
         console.log("data", data.result);
       })
       .catch((error) => {
         console.error("Error fetching user details:", error);
       });
-  }, [Object.keys(userDetails).length]); // Run
+  }, [userId]); // Only run the effect when userId changes
+
+  // Check if userDetails have been fetched before using them in your code
+  if (!userDetailsFetched) {
+    // Render a loading state or handle the absence of user details
+    return <div>Loading...</div>;
+  }
 
   const handleImage = (e) => {
     let file = null;

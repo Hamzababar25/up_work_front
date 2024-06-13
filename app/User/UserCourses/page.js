@@ -41,7 +41,7 @@ function GETUserCourses({ page }) {
   return (
     <div className="bg-gradient-to-b from-[#F0F4F8] to-[#D9E2EC] min-h-screen">
       <Typography variant="h4" className="mt-2 mb-4 text-gray-800">
-        Courses List
+        My Courses
       </Typography>
 
       <div class="grid-cols-1 sm:grid md:grid-cols-2 xl:grid-cols-3 mt-10 gap-y-10 ">

@@ -1,4 +1,5 @@
 import SignupPage from "../../../components/HirerSignup/signup";
+import utility from "@/components/utils/utility";
 
 export default async function Home() {
   "use server";

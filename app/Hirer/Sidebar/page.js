@@ -45,12 +45,12 @@ export default function Sidebar({ show, setter }) {
             <div class="flex items-center justify-start rtl:justify-end">
               <a href="https://flowbite.com" class="flex ms-2 md:me-24">
                 <img
-                  src="https://flowbite.com/docs/images/logo.svg"
-                  class="h-8 me-3"
+                  src="/HerCareerLink.png"
+                  class="h-16 me-3"
                   alt="FlowBite Logo"
                 />
                 <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  Flowbite
+                  HerCareerLink
                 </span>
               </a>
             </div>
@@ -77,11 +77,11 @@ export default function Sidebar({ show, setter }) {
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span class="sr-only">Open user menu</span>
-                    <img
+                    {/* <img
                       class="w-8 h-8 rounded-full"
                       src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                       alt="user photo"
-                    ></img>
+                    ></img> */}
                   </button>
                 </div>
                 <div
