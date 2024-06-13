@@ -1,8 +1,8 @@
-import Dashboard from "../../components/Dashboard/dashboard";
+import HirerDashboard from "../../components/HirerDashboard/dashboard";
 export default function Home() {
   return (
     <main className="">
-      <Dashboard />
+      <HirerDashboard />
     </main>
   );
 }

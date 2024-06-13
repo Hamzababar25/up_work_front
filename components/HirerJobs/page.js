@@ -72,7 +72,7 @@ const HirerJobs = () => {
           <div className="text-gray-600">No jobs were found.</div>
         ) : (
           jobsData.map((job, index) => (
-            <Link href={`/Hirer/HirerJobDetails?jobId=${job.id}`} key={index}>
+            <Link href={`/Hirer/hirerJobDetails?jobId=${job.id}`} key={index}>
               <div className="bg-white rounded p-4 mb-4 cursor-pointer">
                 <h2 className="text-xl font-bold">{job.title}</h2>
                 <p className="text-blue-600 font-bold mb-2 mt-6">

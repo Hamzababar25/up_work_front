@@ -16,7 +16,7 @@ function GETCourses({ page }) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/Courses?perPage=7&page=${page}`,
+          `http://localhost:3001/Courses?perPage=5&page=${page}`,
           {
             headers: {
               Accept: "application/json",

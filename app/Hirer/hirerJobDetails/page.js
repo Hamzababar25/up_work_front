@@ -1,6 +1,6 @@
 import HirerJobDetail from "../../../components/HirerJobDetails/page";
 import axios from "axios";
-
+import utility from "@/components/utils/utility";
 async function jobDetail({ searchParams }) {
   console.log("4", searchParams.jobId);
 

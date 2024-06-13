@@ -73,7 +73,7 @@ const SignupPage = ({ apisignup }) => {
         className="bg-white p-8 rounded shadow-md max-w-lg w-full"
       >
         <h1 className="text-4xl font-bold mb-8 text-center">
-          Welcome to YourProjectName
+          Welcome to HerCareerLink
         </h1>
         <div className="mb-8">
           <input

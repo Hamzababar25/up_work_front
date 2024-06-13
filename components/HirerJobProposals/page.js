@@ -64,7 +64,7 @@ const HirerJobProposals = ({ apiJobData }) => {
       <h1 className="text-2xl font-semibold mb-8">{apiJobData.title}</h1>
       <div className="flex mb-8 gap-x-4 border-b border-blue-400">
         <Link
-          href={`/Hirer/HirerJobDetails?jobId=${apiJobData.id}`}
+          href={`/Hirer/hirerJobDetails?jobId=${apiJobData.id}`}
           className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border-b border-blue-500 hover:border-transparent"
         >
           Details
