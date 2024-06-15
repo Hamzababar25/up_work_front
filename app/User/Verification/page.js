@@ -5,6 +5,7 @@ import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
 import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import utility from "@/components/utils/utility";
 
 const WebcamCapture = () => {
   const webcamRef = useRef(null);
@@ -19,9 +20,7 @@ const WebcamCapture = () => {
     // Check if the user is already verified
     const checkUserVerification = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/User/${userId}`
-        );
+        const response = await axios.get(utility.BASE_URL + `User/${userId}`);
         console.log(response);
         setVerified(response.data.result.verified);
       } catch (error) {
@@ -39,7 +38,7 @@ const WebcamCapture = () => {
 
   const sendImage = async () => {
     try {
-      const response = await axios.post("http://localhost:3001/User/verify", {
+      const response = await axios.post(utility.BASE_URL + "User/verify", {
         userId,
         image: image.split(",")[1], // Send base64 string without the prefix
       });

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import utility from "../utils/utility";
 
 const JobsPage = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const JobsPage = () => {
   useEffect(() => {
     const fetchJobsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/Jobs");
+        const response = await axios.get(utility.BASE_URL + "Jobs");
         console.log(response.data, "kk");
         setJobsData(response.data);
       } catch (error) {
@@ -28,7 +29,7 @@ const JobsPage = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/Jobs/jobs/search/${searchQuery}`
+        utility.BASE_URL + `Jobs/jobs/search/${searchQuery}`
       );
       console.log(response.data.result, "jkj");
       setJobsData(response.data.result);

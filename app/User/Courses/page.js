@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
-
+import utility from "@/components/utils/utility";
 function GETCourses({ page }) {
   const [userData, setUserData] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -16,7 +16,7 @@ function GETCourses({ page }) {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/Courses?perPage=5&page=${page}`,
+          utility.BASE_URL + `Courses?perPage=5&page=${page}`,
           {
             headers: {
               Accept: "application/json",
@@ -44,7 +44,7 @@ function GETCourses({ page }) {
   const handleEnroll = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3001/User/enrollCourse`,
+        utility.BASE_URL + `User/enrollCourse`,
         {
           userId: userId, // Replace with actual user ID
           courseId: selectedCourse.id,

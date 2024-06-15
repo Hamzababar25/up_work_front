@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { FaUser } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
+import utility from "@/components/utils/utility";
 
 function GETUserCourses({ page }) {
   const [userData, setUserData] = useState(null);
@@ -15,7 +16,7 @@ function GETUserCourses({ page }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/User/${userId}`, {
+        const response = await fetch(utility.BASE_URL + `User/${userId}`, {
           headers: {
             Accept: "application/json",
           },

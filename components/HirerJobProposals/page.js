@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import utility from "../utils/utility";
 
 const HirerJobProposals = ({ apiJobData }) => {
   const [jobsData, setJobsData] = useState([]);
@@ -20,7 +21,7 @@ const HirerJobProposals = ({ apiJobData }) => {
   const handleAcceptBid = async function (jobid, bidid) {
     try {
       const response = await fetch(
-        `http://localhost:3001/Jobs/${jobid}/accept-bid`,
+        utility.BASE_URL + `Jobs/${jobid}/accept-bid`,
         {
           method: "PUT",
           headers: {

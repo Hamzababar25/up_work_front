@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import utility from "@/components/utils/utility";
 const CourseDetails = ({ searchParams }) => {
   const [course, setCourse] = useState(null);
   const [videos, setVideos] = useState([]);
@@ -15,14 +15,10 @@ const CourseDetails = ({ searchParams }) => {
     const fetchCourseDetails = async () => {
       try {
         const courseResponse = await axios.get(
-          `http://localhost:3001/Courses/${searchParams.courseId}`
+          utility.BASE_URL + `Courses/${searchParams.courseId}`
         );
         console.log(courseResponse.data.videos, "data");
         setCourse(courseResponse.data);
-        // const videosResponse = await axios.get(
-        //   `http://localhost:3001/Videos?courseId=${courseId}`
-        // );
-        // setVideos(videosResponse.data);
       } catch (error) {
         toast.error("Error fetching course details");
       }

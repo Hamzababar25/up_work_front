@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import utility from "../utils/utility";
 
 function JobsDetailPage({ apiJobData }) {
   const [bidAmount, setBidAmount] = useState("");
@@ -23,9 +24,7 @@ function JobsDetailPage({ apiJobData }) {
   useEffect(() => {
     const checkUserVerification = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/User/${userId}`
-        );
+        const response = await axios.get(utility.BASE_URL + `User/${userId}`);
         console.log(response);
         setVerified(response.data.result.verified);
       } catch (error) {
@@ -50,7 +49,7 @@ function JobsDetailPage({ apiJobData }) {
         setIsModalOpen(true);
         return;
       }
-      const response = await fetch("http://localhost:3001/Bids", {
+      const response = await fetch(utility.BASE_URL + "Bids", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -276,7 +275,7 @@ export default JobsDetailPage;
 export async function getServerSideProps(context) {
   try {
     const { id } = context.query;
-    const response = await axios.get(`http://localhost:3001/Jobs/${id}`);
+    const response = await axios.get(utility.BASE_URL + `Jobs/${id}`);
     const apiJobData = response.data;
     return { props: { apiJobData } };
   } catch (error) {

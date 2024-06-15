@@ -1,3 +1,4 @@
+import utility from "@/components/utils/utility";
 import JobsDetailPage from "../../../components/JobDetails/jobDetails";
 import axios from "axios";
 
@@ -6,7 +7,7 @@ async function jobDetail({ searchParams }) {
 
   try {
     const response = await axios.get(
-      `http://localhost:3001/Jobs/${searchParams.jobId}`
+      utility.BASE_URL + `Jobs/${searchParams.jobId}`
     );
     const JobData = response.data.result.job;
     console.log(JobData, "jnj");

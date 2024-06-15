@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import utility from "../utils/utility";
 
 const CoursesCarousel = () => {
   const [courses, setCourses] = useState([]);
@@ -9,7 +10,7 @@ const CoursesCarousel = () => {
     // Fetch the courses data
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:3001/Admin/courses");
+        const response = await fetch(utility.BASE_URL + "Admin/courses");
         if (response.ok) {
           const data = await response.json();
           console.log("hka", data);

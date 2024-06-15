@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import utility from "../utils/utility";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -18,9 +19,7 @@ const SigninPage = () => {
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/Hirer/one/${email}`
-      );
+      const response = await axios.get(utility.BASE_URL + `Hirer/one/${email}`);
       const user = response.data;
       // console.log(user.result.usertype);
 

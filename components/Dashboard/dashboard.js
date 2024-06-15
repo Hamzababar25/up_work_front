@@ -14,6 +14,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CoursesCarousel from "../CourseCarousel/page";
 import UserCoursesCarousel from "../UserCoursesCarusel/page";
+import utility from "../utils/utility";
 
 const Dashboard = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -27,7 +28,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/Admin/totalcount/count`,
+          utility.BASE_URL + `Admin/totalcount/count`,
           {
             headers: {
               Accept: "application/json",
@@ -53,7 +54,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/Admin/user`, {
+        const response = await fetch(utility.BASE_URL`Admin/user`, {
           headers: {
             Accept: "application/json",
           },
@@ -77,7 +78,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/Admin/hirer`, {
+        const response = await fetch(utility.BASE_URL + `Admin/hirer`, {
           headers: {
             Accept: "application/json",
           },
@@ -102,7 +103,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/Admin/job`, {
+        const response = await fetch(utility.BASE_URL + `Admin/job`, {
           headers: {
             Accept: "application/json",
           },

@@ -175,7 +175,7 @@ function HirerProfilePage() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3001/Hirer/${userId}`)
+    fetch(utility.BASE_URL + `Hirer/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         setUserDetails(data.result);

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import utility from "../utils/utility";
 
 const HirerJobs = () => {
   const [jobsData, setJobsData] = useState("");
@@ -16,7 +17,7 @@ const HirerJobs = () => {
     const fetchJobsData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/Hirer/hirer/jobs/${userId}`
+          utility.BASE_URL + `Hirer/hirer/jobs/${userId}`
         );
         console.log(response.data.result, "kk");
         setJobsData(response.data.result.jobs);

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import utility from "../utils/utility";
 
 const CreateJobsHirer = () => {
   const [description, setDescription] = useState("");
@@ -17,7 +18,7 @@ const CreateJobsHirer = () => {
   const handlePlaceBid = async () => {
     try {
       const keyListArray = keylist.split(",").map((item) => item.trim());
-      const response = await fetch("http://localhost:3001/Jobs", {
+      const response = await fetch(utility.BASE_URL + "Jobs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -125,6 +125,7 @@ import { toast } from "react-toastify";
 import { Dialog, Transition } from "@headlessui/react";
 import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import utility from "@/components/utils/utility";
 const QuizAttempt = ({ searchParams }) => {
   // const [timeLeft, setTimeLeft] = useState(600);
   const [quiz, setQuiz] = useState(null);
@@ -140,7 +141,7 @@ const QuizAttempt = ({ searchParams }) => {
     const fetchQuizDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/Quizzes/${searchParams.quizId}`
+          utility.BASE_URL + `Quizzes/${searchParams.quizId}`
         );
         console.log(response.data, "quizc");
         setQuiz(response.data.result);
@@ -181,7 +182,7 @@ const QuizAttempt = ({ searchParams }) => {
   const handleSubmitQuiz = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3001/Quizzes/${searchParams.quizId}/submit`,
+        utility.BASE_URL + `Quizzes/${searchParams.quizId}/submit`,
         {
           userId: userId,
           quizId: searchParams.quizId,
