@@ -28,8 +28,8 @@ export default function ContactedHirersList({ user }) {
     const fetchContactedUsers = async () => {
       if (user) {
         try {
-          console.log("bruh", user);
-          const userId = user.uid;
+          console.log("bruh", usec);
+          const userId = usec;
           const contactsRef = collection(db, "messages");
           const q = query(
             contactsRef,
@@ -66,11 +66,11 @@ export default function ContactedHirersList({ user }) {
     };
 
     fetchContactedUsers();
-  }, [user]);
+  }, [usec]);
 
   useEffect(() => {
     if (isChatOpen && selectedUserId) {
-      const userId = user.uid;
+      const userId = usec;
       const messagesRef = collection(db, "messages");
       const q = query(
         messagesRef,
@@ -88,7 +88,7 @@ export default function ContactedHirersList({ user }) {
 
       return () => unsubscribe();
     }
-  }, [isChatOpen, selectedUserId, user]);
+  }, [isChatOpen, selectedUserId, usec]);
 
   const handleUserClick = async (contactedUserId) => {
     setSelectedUserId(contactedUserId);
@@ -113,9 +113,9 @@ export default function ContactedHirersList({ user }) {
     if (newMessage.trim() !== "") {
       const messageData = {
         text: newMessage,
-        participants: [user.uid, selectedUserId],
+        participants: [usec, selectedUserId],
         timestamp: serverTimestamp(),
-        senderId: user.uid,
+        senderId: usec,
       };
 
       try {
@@ -165,7 +165,7 @@ export default function ContactedHirersList({ user }) {
               <div
                 key={msg.id}
                 className={`mb-2 p-2 rounded-lg max-w-xs ${
-                  msg.senderId === user.uid
+                  msg.senderId === usec
                     ? "bg-blue-100 self-end text-right"
                     : "bg-gray-100 self-start text-left"
                 }`}
