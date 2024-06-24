@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 // import { auth } from "../../firebase/config";
 import MessagesList from "../../../components//messageList/MessagesList";
+import ContactedUsersList from "@/components/ContactedUserList/page";
 
 //import logo from "@/img/logo.svg";
 
@@ -13,8 +14,10 @@ export default function Sidebar({ show, setter }) {
   const [showMessages, setShowMessages] = useState(false);
   const [open, setOpen] = useState(true);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const router = useRouter();
+  const [showContactedUsers, setShowContactedUsers] = useState(false);
 
+  const router = useRouter();
+  console.log(user, "cc");
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     // console.log("log", isLogoutModalOpen);
@@ -41,8 +44,8 @@ export default function Sidebar({ show, setter }) {
     <div>
       <nav class="fixed top-0 z-50 w-full h-[5.5rem] bg-[#F3F4F6] border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start rtl:justify-end">
+          <div class="flex items-center justify-between ">
+            <div class="flex items-center justify-start rtl:justify-end ">
               <a href="https://flowbite.com" class="flex ms-2 md:me-24">
                 <img
                   src="/HerCareerLink.png"
@@ -54,20 +57,31 @@ export default function Sidebar({ show, setter }) {
                 </span>
               </a>
             </div>
-            <div class="flex items-center">
-              <div class="flex items-center ms-3">
+            <div class="flex items-start  mr-20">
+              <div class="flex items-start ms-3">
                 <div>
                   {user && (
-                    <div>
+                    <div className="flex">
+                      {showMessages && <MessagesList user={user} />}
                       <button
+                        className="flex space-x-2"
                         onClick={() => {
-                          console.log("Messages button clicked");
-                          setShowMessages(!showMessages);
+                          setShowContactedUsers(!showContactedUsers);
+                          setShowMessages(false);
                         }}
                       >
-                        Messages
+                        <svg
+                          class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+                        </svg>{" "}
+                        <span>Inbox</span>
                       </button>
-                      {showMessages && <MessagesList user={user} />}
+                      {showContactedUsers && <ContactedUsersList user={user} />}
                     </div>
                   )}
                   <button

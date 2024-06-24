@@ -88,30 +88,34 @@ const HirerJobProposals = ({ apiJobData }) => {
             >
               <div className="w-full">
                 {job.user && (
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <img
-                        src={job.user.image}
-                        alt="User Profile"
-                        className="h-28 w-28 border-4 border-green-500 object-cover"
-                      />
-                    </div>
-                    <div className="pt-4 pl-6 flex flex-col">
-                      <p className="text-2xl font-bold">{job.user.fullname}</p>
-                      <p className="text-lg font-semibold text-gray-500">
-                        {job.user.mail}
-                      </p>
-                      <p className="text-lg font-semibold text-gray-500">
-                        {job.user.phoneNumber}
-                      </p>
-                      {/* Add more user details as needed */}
-                    </div>
-                    <div className="w-full flex justify-end">
-                      <div className="mr-10 mt-2">
-                        <p className="text-2xl font-bold">{job.bid_amount}</p>
+                  <Link href={`/Hirer/UserProfile?userId=${job.user.id}`}>
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <img
+                          src={job.user.image}
+                          alt="User Profile"
+                          className="h-28 w-28 border-4 border-green-500 object-cover"
+                        />
+                      </div>
+                      <div className="pt-4 pl-6 flex flex-col">
+                        <p className="text-2xl font-bold">
+                          {job.user.fullname}
+                        </p>
+                        <p className="text-lg font-semibold text-gray-500">
+                          {job.user.mail}
+                        </p>
+                        <p className="text-lg font-semibold text-gray-500">
+                          {job.user.phoneNumber}
+                        </p>
+                        {/* Add more user details as needed */}
+                      </div>
+                      <div className="w-full flex justify-end">
+                        <div className="mr-10 mt-2">
+                          <p className="text-2xl font-bold">{job.bid_amount}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 )}
                 <div className="pt-4 pl-4 flex flex-col 2x:w-1/2 lg:w-2/3">
                   <p className="text-sm text-gray-700 font-medium">
