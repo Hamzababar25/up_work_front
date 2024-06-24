@@ -58,8 +58,18 @@ export default function ContactedUsersList({ user }) {
       <div className="absolute top-14 -right-16 max-h-64 overflow-y-auto border border-gray-300 rounded bg-white shadow-lg w-64">
         <ul className="p-2">
           {contactedUsers.map((contactedUser) => (
-            <li key={contactedUser.id} className="py-1 px-2 hover:bg-gray-200">
-              {contactedUser.fullname}
+            <li
+              key={contactedUser.id}
+              className="flex items-center space-x-3 p-2 hover:bg-gray-200 rounded"
+            >
+              <img
+                src={contactedUser.image}
+                alt={contactedUser.fullname}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <span className="text-sm font-medium">
+                {contactedUser.fullname}
+              </span>
             </li>
           ))}
         </ul>
