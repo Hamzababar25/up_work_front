@@ -1,18 +1,32 @@
 "use client";
-import { db } from "@/app/firebase/config"; // Adjust the path to your firebase config
-import React, { useEffect, useState } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { FaRegEdit } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
+import { db } from "@/app/firebase/config";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  where,
+  serverTimestamp,
+  getDocs,
+} from "firebase/firestore";
 import axios from "axios";
 
 export default function ContactedUsersList({ user }) {
   const [contactedUsers, setContactedUsers] = useState([]);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserDetails, setSelectedUserDetails] = useState({});
 
   useEffect(() => {
     const fetchContactedUsers = async () => {
       if (user) {
         try {
-          console.log("User ID:", user.uid);
-
           const userId = user.uid;
           const contactsRef = collection(db, "messages");
           const q = query(
@@ -30,7 +44,6 @@ export default function ContactedUsersList({ user }) {
               )
               .flat();
             const uniqueUserIds = [...new Set(userIds)];
-            console.log("Unique User IDs:", uniqueUserIds);
 
             // Fetch user details from the backend
             const response = await axios.post(
@@ -53,6 +66,64 @@ export default function ContactedUsersList({ user }) {
     fetchContactedUsers();
   }, [user]);
 
+  useEffect(() => {
+    if (isChatOpen && selectedUserId) {
+      const userId = user.uid;
+      const messagesRef = collection(db, "messages");
+      const q = query(
+        messagesRef,
+        where("participants", "array-contains", userId),
+        orderBy("timestamp")
+      );
+
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const messagesData = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setMessages(messagesData);
+      });
+
+      return () => unsubscribe();
+    }
+  }, [isChatOpen, selectedUserId, user]);
+
+  const handleUserClick = async (contactedUserId) => {
+    setSelectedUserId(contactedUserId);
+    setIsChatOpen(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/User/${contactedUserId}`
+      );
+      setSelectedUserDetails(response.data.result);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+  const handleChatClose = () => {
+    setIsChatOpen(false);
+    setSelectedUserId(null);
+    setSelectedUserDetails({});
+  };
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() !== "") {
+      const messageData = {
+        text: newMessage,
+        participants: [user.uid, selectedUserId],
+        timestamp: serverTimestamp(),
+      };
+
+      try {
+        await addDoc(collection(db, "messages"), messageData);
+        setNewMessage("");
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
+    }
+  };
+
   return (
     <div className="relative">
       <div className="absolute top-14 -right-16 max-h-64 overflow-y-auto border border-gray-300 rounded bg-white shadow-lg w-64">
@@ -60,7 +131,8 @@ export default function ContactedUsersList({ user }) {
           {contactedUsers.map((contactedUser) => (
             <li
               key={contactedUser.id}
-              className="flex items-center space-x-3 p-2 hover:bg-gray-200 rounded"
+              className="flex items-center space-x-3 p-2 hover:bg-gray-200 rounded cursor-pointer"
+              onClick={() => handleUserClick(contactedUser.id)}
             >
               <img
                 src={contactedUser.image}
@@ -74,6 +146,41 @@ export default function ContactedUsersList({ user }) {
           ))}
         </ul>
       </div>
+
+      {isChatOpen && selectedUserDetails && (
+        <div className="fixed bottom-0 right-10 m-4 w-96 h-[30rem] bg-white border border-gray-300 rounded-lg shadow-lg flex flex-col">
+          <div className="flex justify-between items-center p-4 border-b border-gray-300">
+            <h2 className="text-xl font-semibold">
+              Chat with {selectedUserDetails.fullname}
+            </h2>
+            <button onClick={handleChatClose} className="text-gray-600">
+              <IoIosCloseCircle className="text-2xl" />
+            </button>
+          </div>
+          <div className="flex-grow p-4 overflow-y-auto">
+            {messages.map((msg) => (
+              <div key={msg.id} className="mb-2">
+                <p className="text-gray-800">{msg.text}</p>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 border-t border-gray-300 flex items-center">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              className="w-full p-2 border border-gray-300 rounded-lg mr-2"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+            />
+            <button
+              onClick={handleSendMessage}
+              className="bg-blue-500 text-white p-2 rounded-lg"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
