@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import axios from "axios";
 
-export default function ContactedUsersList({ user }) {
+export default function ContactedHirersList({ user }) {
   const [contactedUsers, setContactedUsers] = useState([]);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -49,7 +49,7 @@ export default function ContactedUsersList({ user }) {
 
             // Fetch user details from the backend
             const response = await axios.post(
-              "http://localhost:3001/User/find-by-ids",
+              "http://localhost:3001/Hirer/find-by-ids",
               {
                 userIds: uniqueUserIds,
               }
