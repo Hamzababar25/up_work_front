@@ -8,71 +8,15 @@ const FirstPage = () => {
 
   return (
     <div className="bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="container mx-auto py-4 flex justify-between items-center">
-          <div className="text-2xl flex font-bold text-gray-800">
-            <a href="https://flowbite.com" class="">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                class="h-8 me-2"
-                alt="FlowBite Logo"
-              />
-            </a>
-            HerCareer
-          </div>
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden block text-gray-800 focus:outline-none"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              )}
-            </svg>
-          </button>
-          <nav
-            className={`${
-              isMenuOpen ? "block" : "hidden"
-            } md:flex md:items-center md:space-x-4`}
-          >
-            <a href="#" className="text-gray-800">
-              Home
-            </a>
-            <a href="#" className="text-gray-800">
-              Jobs
-            </a>
-            <a href="#" className="text-gray-800">
-              Courses
-            </a>
-            <a href="#" className="text-gray-800">
-              Community
-            </a>
-            <a href="#" className="text-gray-800">
-              Stories
-            </a>
-          </nav>
-        </div>
-      </header>
       <main>
         <section className="py-20">
           <div className="container mx-auto text-center">
+            <div className="flex justify-center ">
+              <img
+                src="/HerCareerLink.png"
+                className="h-48 w-72 me-2 object-cover rounded-2xl mb-4 "
+              />
+            </div>
             <h1 className="text-5xl font-bold text-gray-800 mb-4">
               Empowering Women in the Workplace
             </h1>
