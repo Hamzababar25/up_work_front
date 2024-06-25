@@ -47,16 +47,14 @@ export default function Sidebar({ show, setter }) {
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
           <div class="flex items-center justify-between">
             <div class="flex items-center justify-start rtl:justify-end">
-              <a href="https://flowbite.com" class="flex ms-2 md:me-24">
-                <img
-                  src="/HerCareerLink.png"
-                  class="h-16 me-3"
-                  alt="FlowBite Logo"
-                />
-                <span class="self-center text-blue-500 text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                  HerCareerLink
-                </span>
-              </a>
+              <img
+                src="/HerCareerLink.png"
+                class="h-16 me-3"
+                alt="FlowBite Logo"
+              />
+              <span class="self-center text-blue-500 text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                HerCareerLink
+              </span>
             </div>
             <div class="flex items-center mr-20">
               <div class="flex items-center ms-3">
