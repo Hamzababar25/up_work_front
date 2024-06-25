@@ -2,13 +2,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import utility from "@/components/utils/utility";
+import { motion } from "framer-motion";
+
 const CourseDetails = ({ searchParams }) => {
   const [course, setCourse] = useState(null);
-  const [videos, setVideos] = useState([]);
-  console.log(4, searchParams.courseId);
   const router = useRouter();
 
   useEffect(() => {
@@ -17,7 +16,6 @@ const CourseDetails = ({ searchParams }) => {
         const courseResponse = await axios.get(
           utility.BASE_URL + `Courses/${searchParams.courseId}`
         );
-        console.log(courseResponse.data.videos, "data");
         setCourse(courseResponse.data);
       } catch (error) {
         toast.error("Error fetching course details");
@@ -28,80 +26,85 @@ const CourseDetails = ({ searchParams }) => {
   }, [searchParams.courseId]);
 
   if (!course) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-600">
+        Loading...
+      </div>
+    );
   }
+
   const handleQuizClick = (quizId) => {
     router.push(`/User/QuizAttempt?quizId=${quizId}`);
   };
-  console.log(course.video, "habibi");
+
   return (
-    <div className="container mx-auto p-8  rounded-lg shadow-lg">
-      <div className="bg-white rounded-lg  shadow-md overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            {course.title}
-          </h2>
-          <p className="text-blue-400 mb-4">{course.description}</p>
-          {course.image && (
-            <img
-              src={course.image}
-              alt={course.title}
-              className="w-full h-80 object-contain rounded-lg mb-2 "
-            />
-          )}
+    <div className="container mx-auto p-8 bg-white">
+      <motion.div
+        className="relative bg-white rounded-lg shadow-xl overflow-hidden mb-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {course.image && (
+          <img
+            src={course.image}
+            alt={course.title}
+            className="w-full h-96 object-contain"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-75"></div>
+        <div className="absolute bottom-0 left-0 p-6">
+          <h2 className="text-4xl font-bold text-white mb-2">{course.title}</h2>
+          <p className="text-white text-lg">{course.description}</p>
         </div>
-      </div>
+      </motion.div>
+
       <div className="mt-8">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-4">Videos</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <h3 className="text-3xl font-semibold text-gray-800 mb-6">Videos</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {course.videos.map((video, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105"
+              whileHover={{ scale: 1.05 }}
             >
-              <video
-                src={video.url}
-                controls
-                className="w-full h-48 object-cover"
-              >
-                Your browser does not support the video tag.
-              </video>
+              <div className="relative">
+                <video
+                  src={video.url}
+                  controls
+                  className="w-full h-48 object-cover rounded-t-lg"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
               <div className="p-4">
                 <h4 className="text-lg font-medium text-gray-800">{`Video ${
                   index + 1
                 }`}</h4>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-      <div className="mt-8">
-        <h3 className="text-2xl font-semibold text-gray-800 mb-4">Quizzes</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-6">
+
+      <div className="mt-16 bg-white p-8 rounded-lg shadow-xl">
+        <h3 className="text-3xl font-semibold text-gray-800 mb-6">Quizzes</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {course.quizzes.map((quiz, index) => (
-            <div
+            <motion.div
               key={index}
-              className=" w-fit  overflow-hidden cursor-pointer"
+              className="bg-white rounded-lg shadow-xl overflow-hidden cursor-pointer transform transition-transform duration-300 hover:scale-105"
               onClick={() => handleQuizClick(quiz.id)}
+              whileHover={{ scale: 1.05 }}
             >
               <div className="p-4">
-                <h4 className="text-lg font-medium text-gray-800">
-                  {" "}
-                  {"Quiz" + (index + 1)}
-                </h4>
+                <h4 className="text-lg font-medium text-gray-800">{`Quiz ${
+                  index + 1
+                }`}</h4>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        {/* {course.quizzes.length < 4 && (
-          <div class="relative overflow-hidden bg-cover bg-no-repeat">
-            <Link href={`/Admin/CreateQuiz?courseId=${searchParams.courseId}`}>
-              <button className="bg-green-500 text-white py-2 px-4 rounded-md  mt-20">
-                Add Quiz
-              </button>
-            </Link>
-          </div>
-        )} */}
       </div>
     </div>
   );

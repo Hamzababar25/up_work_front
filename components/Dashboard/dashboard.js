@@ -127,7 +127,7 @@ const Dashboard = () => {
   }, []);
 
   const handleClick = () => {
-    router.push("/User/Sidebar");
+    router.push("/User/jobs");
   };
   const formatDate = (dateString) => {
     const date = new Date(dateString);

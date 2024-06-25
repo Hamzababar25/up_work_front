@@ -130,7 +130,7 @@ const QuizAttempt = ({ searchParams }) => {
   // const [timeLeft, setTimeLeft] = useState(600);
   const [quiz, setQuiz] = useState(null);
   const [answers, setAnswers] = useState({});
-  const [timeLeft, setTimeLeft] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(240);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
   const router = useRouter();

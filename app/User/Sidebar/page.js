@@ -58,7 +58,7 @@ export default function Sidebar({ show, setter }) {
                 </span>
               </a>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center mr-20">
               <div class="flex items-center ms-3">
                 <div>
                   {user && (
@@ -170,7 +170,7 @@ export default function Sidebar({ show, setter }) {
                 <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -186,7 +186,7 @@ export default function Sidebar({ show, setter }) {
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
               </a>
-            </li>
+            </li> */}
             <li>
               <a
                 href="/User/jobs"

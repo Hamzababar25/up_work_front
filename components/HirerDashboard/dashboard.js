@@ -78,7 +78,7 @@ const Dashboard = () => {
   }, []);
 
   const handleClick = () => {
-    router.push("/User/Sidebar");
+    router.push("/Hirer/HirerJobs");
   };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -290,8 +290,8 @@ const Dashboard = () => {
             </div>
           </div>
           <Button
+            className="bg-red-500 text-white py-2 px-4 ml-4 rounded-full hover:bg-blue-600 transition duration-300"
             onClick={handleClick}
-            className=" bg-purple-500 text-white py-2 px-4 ml-4 rounded-full hover:bg-blue-600 transition duration-300"
           >
             Explore Jobs
           </Button>
