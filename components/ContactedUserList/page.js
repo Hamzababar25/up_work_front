@@ -14,6 +14,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import axios from "axios";
+import utility from "../utils/utility";
 
 export default function ContactedUsersList({ user }) {
   const [contactedUsers, setContactedUsers] = useState([]);
@@ -49,7 +50,7 @@ export default function ContactedUsersList({ user }) {
 
             // Fetch user details from the backend
             const response = await axios.post(
-              "http://localhost:3001/User/find-by-ids",
+              utility.BASE_URL + "User/find-by-ids",
               {
                 userIds: uniqueUserIds,
               }
