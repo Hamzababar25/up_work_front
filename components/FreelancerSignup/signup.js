@@ -34,7 +34,7 @@ const SignupPage = ({ apisignup }) => {
       await apisignup({
         // userId: res.user.uid,
         id: res.user.uid,
-        mail: res.user.email,
+        mail: email,
         fullname: firstName + " " + lastName,
         usertype: "user",
         // Pass the displayName

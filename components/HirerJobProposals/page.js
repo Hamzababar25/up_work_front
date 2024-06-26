@@ -132,7 +132,7 @@ const HirerJobProposals = ({ apiJobData }) => {
                   >
                     Accept Bid
                   </button>
-                  {successMessage && (
+                  {/* {successMessage && (
                     <p className="text-green-500 text-lg absolute top-8 right-6 ">
                       {successMessage}
                     </p>
@@ -141,7 +141,7 @@ const HirerJobProposals = ({ apiJobData }) => {
                     <p className="text-red-500 text-lg absolute top-8 right-6 ">
                       {errorMessage}
                     </p>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
@@ -150,6 +150,12 @@ const HirerJobProposals = ({ apiJobData }) => {
           <p>There were no bids for this job.</p>
         )}
       </div>
+      {successMessage && (
+        <p className="text-green-500 text-lg mt-4">{successMessage}</p>
+      )}
+      {errorMessage && (
+        <p className="text-red-500 text-lg mt-4">{errorMessage}</p>
+      )}
     </div>
   );
 };

@@ -98,11 +98,9 @@ function HirerJobDetail({ apiJobData, apiBidData, apiUserData }) {
                   Name: {userData.fullname}
                 </p>
                 <p className="text-blue-500 font-semibold">
-                  Location: {userData.location}
+                  Location: {userData.City}
                 </p>
-                <p className="text-blue-500 font-semibold">
-                  Country: {userData.country}
-                </p>
+
                 <p className="text-blue-500 font-semibold">
                   Phone: {userData.phoneNumber}
                 </p>
