@@ -87,6 +87,7 @@ function UserProfilePage(searchParams) {
         text: newMessage,
         participants: [userId, chatUserId],
         timestamp: serverTimestamp(),
+        senderId: userId,
       };
 
       try {
@@ -166,31 +167,38 @@ function UserProfilePage(searchParams) {
       </div>
 
       {isChatOpen && (
-        <div className="fixed bottom-0 right-0 m-4 w-80 h-[40rem] bg-white border border-gray-300 rounded-lg shadow-lg">
+        <div className="fixed bottom-0 right-10 m-4 w-96 h-[30rem] bg-white border border-gray-300 rounded-lg shadow-lg flex flex-col">
           <div className="flex justify-between items-center p-4 border-b border-gray-300">
             <h2 className="text-xl font-semibold">Chat</h2>
             <button onClick={handleChatClose} className="text-gray-600">
               <IoIosCloseCircle className="text-2xl" />
             </button>
           </div>
-          <div className="p-4 flex-grow overflow-y-auto">
+          <div className="flex-grow p-4 overflow-y-auto">
             {messages.map((msg) => (
-              <div key={msg.id} className="mb-2">
+              <div
+                key={msg.id}
+                className={`mb-2 p-2 rounded-lg max-w-xs ${
+                  msg.senderId === userId
+                    ? "bg-blue-100 self-end text-right"
+                    : "bg-gray-100 self-start text-left"
+                }`}
+              >
                 <p className="text-gray-800">{msg.text}</p>
               </div>
             ))}
           </div>
-          <div className="p-4 border-t border-gray-300">
+          <div className="p-4 border-t border-gray-300 flex items-center">
             <input
               type="text"
               placeholder="Type your message..."
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full p-2 border border-gray-300 rounded-lg mr-2"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
             />
             <button
               onClick={handleSendMessage}
-              className="mt-2 w-full bg-blue-500 text-white p-2 rounded-lg"
+              className="bg-blue-500 text-white p-2 rounded-lg"
             >
               Send
             </button>
