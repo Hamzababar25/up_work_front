@@ -115,13 +115,15 @@ function JobsDetailPage({ apiJobData }) {
           className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-lg p-6 mb-4 xl:w-1/4 h-auto lg:w-2/4 flex flex-col shadow-lg text-white"
         >
           <h2 className="text-2xl font-bold mb-6">About the Client</h2>
-          <div className="flex flex-col items-center mb-6">
-            <img
-              src="/jnjn.avif"
-              alt="User Profile"
-              className="rounded-full h-40 w-40 border-4 border-green-500 object-cover"
-            />
-          </div>
+          {jobsData.hirer && (
+            <div className="flex flex-col items-center mb-6">
+              <img
+                src={jobsData.hirer.image}
+                alt="User Profile"
+                className="rounded-full h-40 w-40 border-4 border-green-500 object-cover"
+              />
+            </div>
+          )}
           {jobsData.hirer && (
             <div className="flex flex-col space-y-4">
               <div className="flex items-center justify-between">
