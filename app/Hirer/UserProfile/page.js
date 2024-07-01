@@ -36,7 +36,6 @@ function UserProfilePage(searchParams) {
   const [userDetails, setUserDetails] = useState({});
 
   const userId = sessionStorage.getItem("user");
-  console.log("bitch", userId);
   const chatUserId = searchParams.searchParams.userId;
 
   useEffect(() => {

@@ -24,13 +24,12 @@ function GETCourses({ page }) {
           }
         );
 
-        console.log(response.status, "habibi");
         if (parseInt(response.status) === 200) {
           const data = await response.json();
           console.log("dataa", data);
           setUserData(data);
         } else {
-          console.error("Error lun user data:", data.error);
+          console.error("Error  user data:", data.error);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -40,7 +39,6 @@ function GETCourses({ page }) {
     fetchData();
   }, [page]);
 
-  console.log("yolo", userData);
   const handleEnroll = async () => {
     try {
       const response = await axios.post(

@@ -23,7 +23,6 @@ const ForgotPage = () => {
   //       const response = await axios.get(
   //       );
   //       const user = response.data;
-  //       // console.log(user.result.usertype);
 
   //       // Check if the user exists and has the correct user type
   //       if (user && user.result.usertype !== "user") {
@@ -36,16 +35,13 @@ const ForgotPage = () => {
   //         );
   //       } else {
   //         const res = await signInWithEmailAndPassword(email, password);
-  //         // console.log(email, password);
-  //         // console.log({ res });
-  //         // console.log(res.user.uid);
+  //
   //         sessionStorage.setItem("user", res.user.uid.toString());
   //         setEmail("");
   //         setPassword("");
   //         router.push("/User");
   //       }
   //     } catch (e) {
-  //       console.log(e);
   //     }
   //   };
   //   //   // Handle signup logic, such as sending the form data to the server

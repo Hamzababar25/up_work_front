@@ -9,7 +9,6 @@ async function jobDetail({ searchParams }) {
       utility.BASE_URL + `Jobs/${searchParams.jobId}`
     );
     const JobData = response.data.result.job;
-    console.log(JobData, "bruhh");
 
     return (
       <main className="">

@@ -22,13 +22,13 @@ function GETUserCourses({ page }) {
           },
         });
 
-        console.log(response.status, "habibi");
+        console.log(response.status);
         if (parseInt(response.status) === 200) {
           const data = await response.json();
           console.log("dataa", data.result.courses);
           setUserData(data.result.courses);
         } else {
-          console.error("Error lun user data:", data.error);
+          console.error("Error  user data:", data.error);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

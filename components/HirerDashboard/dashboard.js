@@ -60,14 +60,12 @@ const Dashboard = () => {
           },
         });
 
-        console.log(response.status, "habibi");
         if (parseInt(response.status) === 200) {
           const data = await response.json();
-          console.log("yo", data);
 
           setJobData(data);
         } else {
-          console.error("Error lun user data:", data.error);
+          console.error("Error  user data:", data.error);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
