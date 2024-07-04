@@ -14,30 +14,39 @@ const SignupPage = ({ apisignup }) => {
   const router = useRouter();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
-
-  // const handleSignup = () => {
-  //   // Handle signup logic, such as sending the form data to the server
-  //   router.push("/Dashboard");
-  // };
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
 
   const handleSignUp = async () => {
+    // Email validation
+    const emailRegex = /@(hotmail\.com|yahoo\.com|gmail\.com)$/i;
+    if (!emailRegex.test(email)) {
+      setEmailErrorMessage("Email must be from Hotmail, Yahoo, or Gmail.");
+      return;
+    }
+
+    // Password validation
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/g;
+    if (!specialCharRegex.test(password)) {
+      setPasswordErrorMessage(
+        "Password must contain at least one special character."
+      );
+      return;
+    }
+
     try {
       const res = await createUserWithEmailAndPassword(email, password);
-      console.log("knk", { res });
       if (!res) {
         setEmailErrorMessage("Email already exists");
         return;
       }
       await apisignup({
-        // userId: res.user.uid,
         id: res.user.uid,
         mail: email,
         fullname: firstName + " " + lastName,
         usertype: "user",
-        // Pass the displayName
       });
       sessionStorage.setItem("user", true);
       setEmail("");
@@ -95,16 +104,25 @@ const SignupPage = ({ apisignup }) => {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailErrorMessage(""); // Reset error message when email is changed
+            }}
             className="w-full p-4 border rounded"
           />
+          {emailErrorMessage && (
+            <div className="text-red-500 text-center">{emailErrorMessage}</div>
+          )}
         </div>
         <div className="mb-8 relative">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setPasswordErrorMessage(""); // Reset error message when password is changed
+            }}
             className="w-full p-4 border rounded"
           />
           <span
@@ -113,6 +131,11 @@ const SignupPage = ({ apisignup }) => {
           >
             {showPassword ? "Hide" : "Show"}
           </span>
+          {passwordErrorMessage && (
+            <div className="text-red-500 text-center">
+              {passwordErrorMessage}
+            </div>
+          )}
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -126,9 +149,6 @@ const SignupPage = ({ apisignup }) => {
           <p className="text-green-500 text-center">
             Account successfully created!
           </p>
-        )}
-        {emailErrorMessage && (
-          <div className="text-green-500 text-center">{emailErrorMessage}</div>
         )}
 
         <p className="text-center text-gray-600">
